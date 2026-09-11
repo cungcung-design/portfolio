@@ -1,61 +1,68 @@
-# Portofolio Web — [Faris Edrik P / rissss21]
+# 🌐 Personal Portfolio — Cruz
 
-Selamat datang di portofolio web pribadi saya! 🌐  
-Dibuat dengan React + Vite, ini adalah showcase dari project, skill, dan karya yang ingin saya bagikan.
+Welcome to my personal portfolio! 👋
 
-##  Struktur Project
+I'm **Cruz**, a Computer Science student at **INTI University, Malaysia**, and an aspiring **Junior Full-Stack Developer**.
 
-- `public/` — file statis (favicon, assets, dsb.)  
-- `src/` — code utama React (komponen, utilitas, dsb.)  
-- `index.html` — entry point halaman web  
-- `package.json` & `package-lock.json` — manajemen dependencies dan script  
-- `vite.config.js` — konfigurasi build dan dev server Vite  
-- `eslint.config.js` — aturan linting agar kodenya tetap bersih dan konsisten  
+This portfolio showcases my **projects, skills, and development journey**, built with **React + Vite**.
 
-##  Fitur Utama
+## 🛠️ Tech Stack
 
-- Dibangun dengan **React + Vite** — ringan, cepat reload, dan performa build optimal  
-- **ESLint** telah terkonfigurasi agar coding style tetap rapi  
-- Struktur modular dan siap dikembangkan—bisa ditambahkan halaman “About”, “Projects”, dsb.
+**Languages:** JavaScript, Python, PHP, Dart, SQL, HTML, CSS
 
-##  Cara Jalankan
+**Frameworks:** React, Node.js, Express.js, FastAPI, Django, Laravel, Flutter, Next.js
 
-1. Clone repository ini:
+**Databases:** PostgreSQL, MySQL, MongoDB
+
+**Tools:** Git, GitHub, Docker, Prisma, Tailwind CSS
+
+## ✨ Features
+
+* Responsive modern design
+* About Me section
+* Skills showcase
+* Featured projects
+* Project details & live demos
+* GitHub links
+* Contact section
+
+## 🚀 Featured Projects
+
+* **E-Commerce Platform** — React, Node.js, PostgreSQL, Prisma
+* **Chin Fashion** — React, Node.js, MongoDB
+* **SaaS Dashboard** — Next.js, Prisma, PostgreSQL
+* **Smart POS** — Python, Tkinter, MySQL
+
+## 📁 Project Structure
+
+```text
+portfolio/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── sections/
+│   └── assets/
+├── index.html
+├── package.json
+└── vite.config.js
+```
+
+## 💻 Run Locally
+
 ```bash
-git clone https://github.com/rissss21/portofolio.git
-cd portofolio
-````
-
-2. Install dependencies:
-```bash
+git clone https://github.com/cungcung-design/portfolio.git
+cd portfolio
 npm install
-````
-
-3. Jalankan server lokal dengan hot reload:
-```bash
 npm run dev
-````
+```
 
-4. Buat versi production:
-```bash
-npm run build
-````
+## 🔗 Links
 
-## &#x20;Quick Preview
+**GitHub:** https://github.com/cungcung-design
 
-Jika sudah di-deploy (contoh: GitHub Pages, Netlify, Vercel), kamu bisa tambahkan link deploy di sini, misalnya:
-[🔗 Lihat versi live](https://username.github.io/portofolio/)
-
-## Tentang Saya
-
-Hai, saya Faris Edrik P (username GitHub: `rissss21`).
-Saya seorang Developer yang suka bikin aplikasi web ringan dengan tampilan modern dan performa tinggi. Scroll aja di project saya, dan jangan sungkan untuk reach out kalau ada pertanyaan!
-
-* **Email:** [email\_farisedrik21@gmail.com](mailto:email_farisedrik21@gmail.com)
-* **LinkedIn:** [linkedin.com/in/farisedp](https://www.linkedin.com/in/farisedp/)
-* **Instagram:** @farisedrikprayoga
+**Portfolio:** Coming Soon
 
 ---
 
-
-[1]: https://github.com/rissss21/portofolio "GitHub - rissss21/portofolio"
+⭐ Thanks for visiting my portfolio!
