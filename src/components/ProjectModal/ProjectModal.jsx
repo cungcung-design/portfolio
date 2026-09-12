@@ -42,7 +42,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
         onClick={(e) => e.stopPropagation()} // Mencegah modal tertutup saat diklik di dalam
         className={`bg-zinc-900 border border-violet-500/50 rounded-2xl shadow-2xl shadow-violet-500/20 w-full max-w-lg transform transition-transform duration-300 ${isClosing ? 'animate-out' : 'animate-in'}`}
       >
-        {/* --- GAMBAR PROYEK --- */}
+        {/* --- PROJECT IMAGE --- */}
         <img 
           src={project.image} 
           alt={project.title} 

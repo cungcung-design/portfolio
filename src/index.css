@@ -4,4 +4,26 @@
   body {
     font-family: "Poppins", sans-serif;
   }
+
+  :root {
+    --section-gap: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --section-gap: 6.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --section-gap: 7.5rem;
+    }
+  }
+}
+
+@layer components {
+  .section-gap {
+    margin-top: var(--section-gap);
+  }
 }

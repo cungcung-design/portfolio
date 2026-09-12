@@ -10,12 +10,12 @@ const Footer = () => {
   ];
 
   return (
-    <div className="mt-32 pb-8 flex flex-col items-center relative z-10">
+    <div className="section-gap pb-8 flex flex-col items-center relative z-10">
       {/* Flex container adaptif */}
       <div className="w-full flex flex-col md:flex-row items-center md:justify-between gap-6">
         
         {/* Judul - paling atas di mobile */}
-        <h1 className="text-2xl font-bold order-1 md:order-none">
+        <h1 className="text-lg md:text-xl font-bold order-1 md:order-none">
           Portofolio
         </h1>
 

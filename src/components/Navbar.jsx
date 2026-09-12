@@ -1,42 +1,110 @@
 import { useState, useEffect } from "react";
 
-const Navbar = ({ hidden = false }) => {
-  // ⛔ Saat hidden, jangan render apa pun
-  if (hidden) return null;
+const links = [
+  { href: "#home", label: "Home" },
+  { href: "#about", label: "About" },
+  { href: "#project", label: "Project" },
+  { href: "#contact", label: "Contact" },
+];
 
-  const [active, setActive] = useState(false);
+const Navbar = ({ hidden = false }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setActive(window.scrollY > 150);
-    handleScroll(); // init posisi saat mount
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    if (!menuOpen) return;
+
+    const onKey = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  if (hidden) return null;
 
   return (
-    <nav className="navbar relative z-50 py-7 flex items-center justify-between px-6 md:px-12">
-      {/* Logo */}
+    <nav className="navbar relative z-50 flex items-center justify-between py-4 md:py-5">
       <div className="logo">
-        <h1 className="text-3xl font-bold text-white p-1 md:bg-transparent md:text-white">
+        <a href="#home" className="inline-flex items-center text-lg md:text-xl font-bold text-white p-1">
           Portofolio
-        </h1>
+        </a>
       </div>
 
-      {/* Menu */}
-      <ul
-        className={`flex items-center sm:gap-10 gap-4 
-          md:static fixed left-1/2 -translate-x-1/2 md:translate-x-0 
-          md:opacity-100 bg-white/10 backdrop-blur-md 
-          md:bg-transparent md:backdrop-blur-none
-          p-4 rounded-br-2xl rounded-bl-2xl 
-          transition-all md:transition-none
-          ${active ? "top-0 opacity-100" : "-top-10 opacity-0"}`}
-      >
-        <li><a href="#home" className="sm:text-lg text-base font-medium">Home</a></li>
-        <li><a href="#about" className="sm:text-lg text-base font-medium">About</a></li>
-        <li><a href="#project" className="sm:text-lg text-base font-medium">Project</a></li>
-        <li><a href="#contact" className="sm:text-lg text-base font-medium">Contact</a></li>
+      <ul className="hidden lg:flex items-center gap-8">
+        {links.map((link) => (
+          <li key={link.href}>
+            <a
+              href={link.href}
+              className="text-sm font-medium text-white/90 transition-colors hover:text-white"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
       </ul>
+
+      <button
+        type="button"
+        className="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-xl text-white"
+        aria-expanded={menuOpen}
+        aria-controls="mobile-nav"
+        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        <span className="relative block h-4 w-5">
+          <span
+            className={`absolute left-0 top-0 block h-0.5 w-5 rounded-full bg-white transition-transform duration-200 ${
+              menuOpen ? "translate-y-[7px] rotate-45" : ""
+            }`}
+          />
+          <span
+            className={`absolute left-0 top-[7px] block h-0.5 w-5 rounded-full bg-white transition-opacity duration-200 ${
+              menuOpen ? "opacity-0" : "opacity-100"
+            }`}
+          />
+          <span
+            className={`absolute left-0 top-[14px] block h-0.5 w-5 rounded-full bg-white transition-transform duration-200 ${
+              menuOpen ? "-translate-y-[7px] -rotate-45" : ""
+            }`}
+          />
+        </span>
+      </button>
+
+      {menuOpen && (
+        <button
+          type="button"
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+          aria-label="Close menu"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
+
+      <div
+        id="mobile-nav"
+        className={`lg:hidden absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border border-white/10 bg-white/10 backdrop-blur-md transition-all duration-200 ${
+          menuOpen ? "visible opacity-100" : "invisible pointer-events-none opacity-0"
+        }`}
+      >
+        <ul className="flex flex-col px-2 py-2">
+          {links.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className="flex min-h-12 items-center rounded-xl px-4 text-sm font-medium text-white/90"
+                onClick={() => setMenuOpen(false)}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 };

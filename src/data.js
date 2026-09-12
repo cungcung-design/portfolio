@@ -56,7 +56,7 @@ export const skillGroups = [
       { id: "express", gambar: icon("express/express-original.svg"), nama: "Express.js", ket: "Framework", dad: "550", invert: true },
       { id: "prisma", gambar: icon("prisma/prisma-original.svg"), nama: "Prisma", ket: "ORM", dad: "600", invert: true },
       // { id: "sqlalchemy", gambar: si("sqlalchemy", "D71F00"), nama: "SQLAlchemy", ket: "ORM", dad: "650" },
-      { id: "tkinter", gambar: icon("python/python-original.svg"), nama: "Tkinter", ket: "GUI Library", dad: "700" },
+      // { id: "tkinter", gambar: icon("python/python-original.svg"), nama: "Tkinter", ket: "GUI Library", dad: "700" },
     ],
   },
   {
@@ -92,7 +92,7 @@ import Project4 from "/assets/project/project4.jpg";
 import Project5 from "/assets/project/project5.jpg";
 import Project6 from "/assets/project/project6.jpg";
 
-export const listProyek = [
+export const listProject = [
   {
     id: 1,
     image: Project1,
