@@ -1,24 +1,16 @@
-import { useRef, useState, useEffect } from "react";
+import { lazy, Suspense, useState } from "react";
 import ProfileCard from "./components/ProfileCard/ProfileCard";
+import Lanyard from "./components/Lanyard/Lanyard";
 import ShinyText from "./components/ShinyText/ShinyText";
 import BlurText from "./components/BlurText/BlurText";
-import ScrambledText from "./components/ScrambledText/ScrambledText";
-import SplitText from "./components/SplitText/SplitText";
-import Lanyard from "./components/Lanyard/Lanyard";
-import GlassIcons from "./components/GlassIcons/GlassIcons";
-import { skillGroups, listProject } from "./data";
-import ChromaGrid from "./components/ChromaGrid/ChromaGrid";
-import ProjectModal from "./components/ProjectModal/ProjectModal"; // <-- IMPORT MODAL
-import AOS from 'aos';
-import 'aos/dist/aos.css'; // You can also use <link> for styles
-// ..
-AOS.init();
+import { skillGroups } from "./data";
+import InViewLazy from "./components/InViewLazy";
+
+const ProjectsGrid = lazy(() => import("./components/ProjectsGrid"));
+const ProjectModal = lazy(() => import("./components/ProjectModal/ProjectModal"));
 
 function App() {
-  const aboutRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  const [selectedProject, setSelectedProject] = useState(null); // null = modal tertutup
+  const [selectedProject, setSelectedProject] = useState(null);
 
   const handleProjectClick = (project) => {
     setSelectedProject(project);
@@ -27,45 +19,15 @@ function App() {
   const handleCloseModal = () => {
     setSelectedProject(null);
   };
-  // -------------------------
-
-  useEffect(() => {
-    const isReload =
-      performance.getEntriesByType("navigation")[0]?.type === "reload";
-
-    if (isReload) {
-      // Ambil path tanpa hash
-      const baseUrl = window.location.origin + "/portofolio/";
-      window.location.replace(baseUrl);
-    }
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (aboutRef.current) {
-      observer.observe(aboutRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <>
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="hero grid md:grid-cols-2 items-center pt-14 md:pt-20 pb-10 md:pb-14 xl:gap-12 gap-10 grid-cols-1">
-          <div className="animate__animated animate__fadeInUp animate__delay-3s">
+          <div>
             <div className="flex items-center gap-3 mb-6 bg-transparent w-fit py-2 px-1 rounded-2xl">
-              <img src="./assets/cruz.png" className="w-8 rounded-md" />
+              <img src="./assets/cruz.png" className="w-8 rounded-md" width="32" height="32" fetchPriority="high" />
               <q className="text-sm">Junior Full-Stack Developer</q>
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold mb-6">
@@ -93,7 +55,7 @@ function App() {
             </div>
 
           </div>
-          <div className="flex justify-center md:justify-end -translate-y-3 md:-translate-y-8 animate__animated animate__fadeInUp animate__delay-4s">
+          <div className="flex justify-center md:justify-end -translate-y-3 md:-translate-y-8">
             <ProfileCard
               name="Cruz"
               title="Junior Developer"
@@ -191,6 +153,8 @@ function App() {
                     <img
                       src={tool.gambar}
                       alt={tool.nama}
+                      loading="lazy"
+                      decoding="async"
                       className={`h-12 w-12 shrink-0 object-contain rounded-lg bg-zinc-800 p-2 transition-all duration-300 lg:group-hover:bg-zinc-900 ${tool.invert ? "invert" : ""}`}
                     />
                     <div className="flex min-w-0 flex-col overflow-hidden">
@@ -219,14 +183,9 @@ function App() {
         <div className="project-box mt-10 bg-transparent" >
 
           <div className="relative h-auto bg-transparent" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400" data-aos-once="true" >
-            <ChromaGrid
-              items={listProject}
-              onItemClick={handleProjectClick} // Kirim fungsi untuk handle klik
-              radius={500}
-              damping={0.45}
-              fadeOut={0.6}
-              ease="power3.out"
-            />
+            <InViewLazy>
+              <ProjectsGrid onItemClick={handleProjectClick} />
+            </InViewLazy>
           </div>
         </div>
         {/* Project */}
@@ -319,11 +278,15 @@ function App() {
         {/* Kontak */}
       </main>
 
-      <ProjectModal
-        isOpen={!!selectedProject}
-        onClose={handleCloseModal}
-        project={selectedProject}
-      />
+      {selectedProject && (
+        <Suspense fallback={null}>
+          <ProjectModal
+            isOpen={!!selectedProject}
+            onClose={handleCloseModal}
+            project={selectedProject}
+          />
+        </Suspense>
+      )}
     </>
   )
 }

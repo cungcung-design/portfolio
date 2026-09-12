@@ -1,32 +1,25 @@
 import { useState, useEffect } from "react"
 
-const MIN_VISIBLE_MS = 650
-const FADE_MS = 450
+const FADE_MS = 280
 
 const PreLoader = () => {
   const [visible, setVisible] = useState(true)
   const [fadeOut, setFadeOut] = useState(false)
 
   useEffect(() => {
-    let fadeTimer
     let hideTimer
-    const started = Date.now()
+    let frameTwo = 0
 
-    const dismiss = () => {
-      const remaining = Math.max(0, MIN_VISIBLE_MS - (Date.now() - started))
-      fadeTimer = setTimeout(() => setFadeOut(true), remaining)
-      hideTimer = setTimeout(() => setVisible(false), remaining + FADE_MS)
-    }
-
-    if (document.readyState === "complete") {
-      dismiss()
-    } else {
-      window.addEventListener("load", dismiss)
-    }
+    const frameOne = requestAnimationFrame(() => {
+      frameTwo = requestAnimationFrame(() => {
+        setFadeOut(true)
+        hideTimer = setTimeout(() => setVisible(false), FADE_MS)
+      })
+    })
 
     return () => {
-      window.removeEventListener("load", dismiss)
-      clearTimeout(fadeTimer)
+      cancelAnimationFrame(frameOne)
+      cancelAnimationFrame(frameTwo)
       clearTimeout(hideTimer)
     }
   }, [])
@@ -35,7 +28,7 @@ const PreLoader = () => {
 
   return (
     <div
-      className={`fixed inset-0 z-[10000] flex items-center justify-center bg-[#040508] transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[10000] flex items-center justify-center bg-[#040508] transition-opacity duration-300 ${
         fadeOut ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
       aria-hidden="true"

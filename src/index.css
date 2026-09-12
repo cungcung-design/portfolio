@@ -26,4 +26,25 @@
   .section-gap {
     margin-top: var(--section-gap);
   }
+
+  .hero-enter {
+    opacity: 1;
+    animation: hero-fade-up 0.7s ease both;
+  }
+
+  .hero-enter-card {
+    animation-delay: 0.12s;
+  }
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }

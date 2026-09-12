@@ -299,7 +299,8 @@ const ProfileCardComponent = ({
               className="avatar"
               src={avatarUrl}
               alt={`${name || "User"} avatar`}
-              loading="lazy"
+              fetchPriority="high"
+              decoding="async"
               onError={(e) => {
                 const target = e.target;
                 target.style.display = "none";
