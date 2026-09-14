@@ -44,10 +44,11 @@ function App() {
             <div className="flex items-center sm:gap-4 gap-3">
               <a 
                 href={publicAsset("assets/CV.pdf")} 
-                download="Faris_Edrik_Prayoga_CV.pdf" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-base font-semibold bg-[#1a1a1a] py-3 px-6 rounded-full border border-gray-700 hover:bg-[#222] transition-colors"
               >
-                <ShinyText text="Download CV" disabled={false} speed={3} className="custom-class" />
+                <ShinyText text="View CV" disabled={false} speed={3} className="custom-class" />
               </a>
 
               <a href="#project" className="text-base font-semibold bg-[#1a1a1a] py-3 px-6 rounded-full border border-gray-700 hover:bg-[#222] transition-colors">
@@ -72,9 +73,9 @@ function App() {
           </div>
         </div>
         {/* tentang */}
-        <div className="section-gap w-full rounded-3xl border-[5px] border-violet-500/40 shadow-[0_0_30px_rgba(168,85,247,0.4)] bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#1a1a1a] px-5 py-12 md:px-6 md:py-14" id="about">
-          <div className="flex flex-col md:flex-row items-stretch justify-between gap-6 md:gap-8 px-4 md:px-6" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
-            <div className="basis-full md:basis-7/12 flex items-center pr-0 md:pr-8 border-b md:border-b-0 md:border-r border-violet-500/30 pb-8 md:pb-0">
+        <div className="section-gap w-full rounded-3xl border-[5px] border-violet-500/40 shadow-[0_0_30px_rgba(168,85,247,0.4)] bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#1a1a1a] px-5 py-8 md:px-6 md:py-10" id="about">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-stretch gap-8 md:gap-10 px-4 md:px-6" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+            <div className="flex items-center pr-0 md:pr-10 border-b md:border-b-0 md:border-r border-violet-500/30 pb-8 md:pb-0">
               {/* Kolom kiri */}
               <div className="w-full text-left">
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">
@@ -121,8 +122,8 @@ function App() {
             </div>
 
             {/* Kolom kanan */}
-            <div className="basis-full md:basis-5/12 min-w-0 pl-0 md:pl-8 overflow-hidden max-w-full flex items-center justify-center">
-              <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} />
+            <div className="min-w-0 pl-0 md:pl-10 overflow-hidden max-w-full flex items-center justify-center">
+              <Lanyard position={[0, 0, 13]} gravity={[0, -40, 0]} />
             </div>
           </div>
 

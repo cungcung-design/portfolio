@@ -1,18 +1,60 @@
-import "remixicon/fonts/remixicon.css";
+import { useEffect, useState } from "react";
+import {
+  VscHome,
+  VscAccount,
+  VscArchive,
+  VscMail,
+  VscGithub,
+} from "react-icons/vsc";
+import { FaLinkedinIn } from "react-icons/fa";
+import Dock from "./Dock";
+
+const scrollToId = (id) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+};
+
+const openExternal = (url) => {
+  window.open(url, "_blank", "noopener,noreferrer");
+};
+
+const items = [
+  { icon: <VscHome size={18} />, label: "Home", onClick: () => scrollToId("home") },
+  { icon: <VscAccount size={18} />, label: "About", onClick: () => scrollToId("about") },
+  { icon: <VscArchive size={18} />, label: "Projects", onClick: () => scrollToId("project") },
+  { icon: <VscMail size={18} />, label: "Contact", onClick: () => scrollToId("contact") },
+  {
+    icon: <VscGithub size={18} />,
+    label: "GitHub",
+    onClick: () => openExternal("https://github.com/cungcung-design"),
+  },
+  {
+    icon: <FaLinkedinIn size={18} />,
+    label: "LinkedIn",
+    onClick: () => openExternal("https://www.linkedin.com/in/ngun-za-cung"),
+  },
+];
 
 const Footer = () => {
-  return (
-    <div className="section-gap pb-8 flex flex-col items-center relative z-10 max-w-7xl mx-auto w-full px-6">
-      <div className="w-full flex flex-col md:flex-row items-center md:justify-between gap-6">
-        <h1 className="text-lg md:text-xl font-bold">
-          Portofolio
-        </h1>
+  const [compact, setCompact] = useState(
+    () => typeof window !== "undefined" && window.innerWidth < 768
+  );
 
-        <div className="flex gap-3">
-          <a href="https://github.com/cungcung-design" target="_blank" rel="noopener noreferrer"><i className="ri-github-fill ri-2x"></i></a>
-        </div>
-      </div>
-    </div>
+  useEffect(() => {
+    const onResize = () => setCompact(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  return (
+    <>
+      <div className="h-20 md:h-24" aria-hidden="true" />
+      <Dock
+        items={items}
+        panelHeight={compact ? 56 : 68}
+        baseItemSize={compact ? 40 : 50}
+        magnification={compact ? 52 : 70}
+      />
+    </>
   );
 };
 
