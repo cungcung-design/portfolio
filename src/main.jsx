@@ -8,7 +8,7 @@ import FumaraSmoke from './components/FumaraSmoke/FumaraSmoke.jsx'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-AOS.init();
+AOS.init({ once: true });
 
 const Footer = lazy(() => import('./components/Footer.jsx'))
 
@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <PreLoader/>
     <FumaraSmoke />
-    <div className="relative z-10 container mx-auto px-6">
+    <div className="relative z-10 w-full overflow-x-hidden">
       <Navbar />
       <App />
       <Suspense fallback={null}>

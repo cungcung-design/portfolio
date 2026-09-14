@@ -1,8 +1,8 @@
-import Project1 from "/assets/project/project1.webp";
+import Project1 from "/assets/project/project1.jpg";
 import Project2 from "/assets/project/project2.webp";
-import Project3 from "/assets/project/project3.webp";
+import Project3 from "/assets/project/project3.jpg";
 import Project4 from "/assets/project/project4.jpg";
-import Project5 from "/assets/project/project5.webp";
+import Project5 from "/assets/project/project5.jpg";
 import Project6 from "/assets/project/project6.jpg";
 
 export const listProject = [

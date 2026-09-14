@@ -5,6 +5,7 @@ import ShinyText from "./components/ShinyText/ShinyText";
 import BlurText from "./components/BlurText/BlurText";
 import { skillGroups } from "./data";
 import InViewLazy from "./components/InViewLazy";
+import { publicAsset } from "./publicAsset";
 
 const ProjectsGrid = lazy(() => import("./components/ProjectsGrid"));
 const ProjectModal = lazy(() => import("./components/ProjectModal/ProjectModal"));
@@ -22,15 +23,15 @@ function App() {
 
   return (
     <>
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="max-w-7xl mx-auto w-full px-6">
 
-        <div className="hero grid md:grid-cols-2 items-center pt-14 md:pt-20 pb-10 md:pb-14 xl:gap-12 gap-10 grid-cols-1">
+        <div className="hero grid w-full md:grid-cols-2 items-center pt-16 md:pt-24 lg:pt-28 pb-14 md:pb-20 xl:gap-16 gap-12 grid-cols-1">
           <div>
-            <div className="flex items-center gap-3 mb-6 bg-transparent w-fit py-2 px-1 rounded-2xl">
-              <img src="./assets/cruz.png" className="w-8 rounded-md" width="32" height="32" fetchPriority="high" />
-              <q className="text-sm">Junior Full-Stack Developer</q>
+            <div className="flex items-center gap-3 mb-7 bg-transparent w-fit py-2 px-1 rounded-2xl">
+              <img src={publicAsset("assets/cruz.png")} className="w-10 rounded-md" width="40" height="40" fetchPriority="high" />
+              <q className="text-base md:text-lg">Junior Full-Stack Developer</q>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-7">
               <ShinyText text="Hi I'm Cruz" disabled={false} speed={3} className='custom-class' />
             </h1>
             <BlurText
@@ -38,31 +39,31 @@ function App() {
               delay={150}
               animateBy="words"
               direction="top"
-              className="mb-7 text-sm md:text-base text-zinc-300"
+              className="mb-9 text-base md:text-lg text-zinc-300"
             />
-            <div className="flex items-center sm:gap-3 gap-2">
+            <div className="flex items-center sm:gap-4 gap-3">
               <a 
-                href="./assets/CV.pdf" 
+                href={publicAsset("assets/CV.pdf")} 
                 download="Faris_Edrik_Prayoga_CV.pdf" 
-                className="text-sm font-semibold bg-[#1a1a1a] py-2.5 px-5 rounded-full border border-gray-700 hover:bg-[#222] transition-colors"
+                className="text-base font-semibold bg-[#1a1a1a] py-3 px-6 rounded-full border border-gray-700 hover:bg-[#222] transition-colors"
               >
                 <ShinyText text="Download CV" disabled={false} speed={3} className="custom-class" />
               </a>
 
-              <a href="#project" className="text-sm font-semibold bg-[#1a1a1a] py-2.5 px-5 rounded-full border border-gray-700 hover:bg-[#222] transition-colors">
+              <a href="#project" className="text-base font-semibold bg-[#1a1a1a] py-3 px-6 rounded-full border border-gray-700 hover:bg-[#222] transition-colors">
                 <ShinyText text="Explore My Projects" disabled={false} speed={3} className="custom-class" />
               </a>
             </div>
 
           </div>
-          <div className="flex justify-center md:justify-end -translate-y-3 md:-translate-y-8">
+          <div className="flex justify-center md:justify-end -translate-y-4 md:-translate-y-10">
             <ProfileCard
               name="Cruz"
               title="Junior Developer"
               handle="N Z Cung JB"
               status="Online"
               contactText="Contact Me"
-              avatarUrl="./assets/cruz.png"
+              avatarUrl={publicAsset("assets/cruz.png")}
               showUserInfo={true}
               enableTilt={true}
               enableMobileTilt={false}
@@ -71,12 +72,12 @@ function App() {
           </div>
         </div>
         {/* tentang */}
-        <div className="section-gap mx-auto w-full max-w-[1600px] rounded-3xl border-[5px] border-violet-500/40 shadow-[0_0_30px_rgba(168,85,247,0.4)] bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#1a1a1a] px-5 py-5 md:px-6 md:py-5" id="about">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 pt-0 px-4 md:px-6" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
-            <div className="basis-full md:basis-7/12 pr-0 md:pr-8 border-b md:border-b-0 md:border-r border-violet-500/30 pb-6 md:pb-0">
+        <div className="section-gap w-full rounded-3xl border-[5px] border-violet-500/40 shadow-[0_0_30px_rgba(168,85,247,0.4)] bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#1a1a1a] px-5 py-12 md:px-6 md:py-14" id="about">
+          <div className="flex flex-col md:flex-row items-stretch justify-between gap-6 md:gap-8 px-4 md:px-6" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+            <div className="basis-full md:basis-7/12 flex items-center pr-0 md:pr-8 border-b md:border-b-0 md:border-r border-violet-500/30 pb-8 md:pb-0">
               {/* Kolom kiri */}
-              <div className="flex-1 text-left">
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              <div className="w-full text-left">
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">
                   About Me
                 </h2>
 
@@ -85,23 +86,23 @@ function App() {
                   delay={150}
                   animateBy="words"
                   direction="top"
-                  className="text-sm md:text-base leading-relaxed mb-6 text-gray-300"
+                  className="text-sm md:text-base leading-relaxed mb-8 text-gray-300"
                 />
 
-                <div className="flex flex-col sm:flex-row items-center sm:justify-between text-center sm:text-left gap-y-5 sm:gap-y-0 mb-3 w-full">
-                  <div>
+                <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-between text-center sm:text-left gap-y-5 sm:gap-y-0 mb-6 w-full">
+                  <div className="w-full sm:flex-1">
                     <h1 className="text-2xl md:text-3xl mb-1">
                       6<span className="text-violet-500">+</span>
                     </h1>
                     <p className="text-sm">Projects Completed</p>
                   </div>
-                  <div>
+                  <div className="w-full sm:flex-1">
                     <h1 className="text-2xl md:text-3xl mb-1">
                       1st<span className="text-violet-500"> Year</span>
                     </h1>
                     <p className="text-sm">Computer Science Student</p>
                   </div>
-                  <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600" data-aos-once="true">
+                  <div className="w-full sm:flex-1" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600" data-aos-once="true">
                     <h1 className="text-2xl md:text-3xl mb-1">
                       1<span className="text-violet-500">+</span>
                     </h1>
@@ -120,7 +121,7 @@ function App() {
             </div>
 
             {/* Kolom kanan */}
-            <div className="basis-full md:basis-5/12 pl-0 md:pl-8 overflow-hidden max-w-full flex justify-center">
+            <div className="basis-full md:basis-5/12 min-w-0 pl-0 md:pl-8 overflow-hidden max-w-full flex items-center justify-center">
               <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} />
             </div>
           </div>
@@ -140,14 +141,10 @@ function App() {
               >
                 {group.title}
               </h2>
-              <div className="tools-box grid w-full grid-cols-2 gap-3 min-[480px]:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-5">
+              <div className="tools-box grid w-full grid-cols-2 gap-3 min-[480px]:gap-4 md:grid-cols-3 lg:grid-cols-4">
                 {group.items.map((tool) => (
                   <div
                     key={tool.id}
-                    data-aos="fade-up"
-                    data-aos-duration="1000"
-                    data-aos-delay={tool.dad}
-                    data-aos-once="true"
                     className="group flex h-full min-h-[4.5rem] min-w-0 items-center gap-3 rounded-xl border border-zinc-700 bg-zinc-900/60 p-2.5 shadow-lg backdrop-blur-md transition-all duration-300 min-[480px]:p-3 lg:hover:bg-zinc-800/80"
                   >
                     <img
@@ -177,10 +174,10 @@ function App() {
         {/* tentang */}
 
         {/* Project */}
-        <div className="project section-gap" id="project" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true"></div>
+        <div className="project section-gap w-full" id="project" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true"></div>
         <h1 className="text-center text-2xl md:text-3xl font-bold mb-2" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">Project</h1>
         <p className="text-sm md:text-base text-center opacity-50" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300" data-aos-once="true">Showcasing a selection of projects that reflect my skills, creativity, and passion for building meaningful digital experiences.</p>
-        <div className="project-box mt-10 bg-transparent" >
+        <div className="project-box mt-10 w-full bg-transparent" >
 
           <div className="relative h-auto bg-transparent" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400" data-aos-once="true" >
             <InViewLazy>
@@ -192,7 +189,7 @@ function App() {
 
 
         {/* Kontak */}
-        <div className="kontak section-gap" id="contact">
+        <div className="kontak section-gap w-full" id="contact">
           <h1
             className="text-2xl md:text-3xl mb-2 font-bold text-center"
             data-aos="fade-up"
