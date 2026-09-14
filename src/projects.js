@@ -1,4 +1,4 @@
-import Project1 from "/assets/project/project1.jpg";
+import Project1 from "/assets/project/project1.webp";
 import Project2 from "/assets/project/project2.webp";
 import Project3 from "/assets/project/project3.jpg";
 import Project4 from "/assets/project/project4.jpg";
