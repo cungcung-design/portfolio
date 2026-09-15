@@ -30,7 +30,7 @@ const items = [
   {
     icon: <FaLinkedinIn size={18} />,
     label: "LinkedIn",
-    onClick: () => openExternal("https://www.linkedin.com/in/ngun-za-cung"),
+    onClick: () => openExternal("https://www.linkedin.com/in/ngun-cung-7a1795413"),
   },
 ];
 
