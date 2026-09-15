@@ -47,7 +47,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className="h-20 md:h-24" aria-hidden="true" />
+      <div className="h-24 md:h-28" aria-hidden="true" />
       <Dock
         items={items}
         panelHeight={compact ? 56 : 68}

@@ -23,6 +23,7 @@ export default function Lanyard({ position = [0, 0, 30], gravity = [0, -40, 0], 
       <Canvas
         camera={{ position: position, fov: fov }}
         gl={{ alpha: transparent }}
+        style={{ width: "100%", height: "100%", touchAction: "pan-y" }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
       >
         <ambientLight intensity={Math.PI} />

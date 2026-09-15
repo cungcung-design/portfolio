@@ -21,14 +21,19 @@ const Navbar = ({ hidden = false }) => {
       if (window.innerWidth >= 1024) setMenuOpen(false);
     };
 
+    const prevHtml = document.documentElement.style.overflow;
+    const prevBody = document.body.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
     document.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
-    document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", onResize);
-      document.body.style.overflow = "";
+      document.documentElement.style.overflow = prevHtml;
+      document.body.style.overflow = prevBody;
     };
   }, [menuOpen]);
 
@@ -36,7 +41,7 @@ const Navbar = ({ hidden = false }) => {
 
   return (
     <nav className="navbar relative z-50 w-full">
-      <div className="max-w-7xl mx-auto w-full px-6 relative flex items-center justify-between py-4 md:py-5">
+      <div className="relative mx-auto flex w-full max-w-7xl min-w-0 items-center justify-between px-4 py-4 sm:px-6 md:py-5">
         <div className="logo min-w-0">
           <a
             href="#home"

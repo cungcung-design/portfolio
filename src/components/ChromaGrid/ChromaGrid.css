@@ -3,8 +3,8 @@
   width: 100%;
   height: auto;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: 1fr;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: auto;
   justify-content: center;
   align-items: stretch;
   gap: 1.25rem;
@@ -39,12 +39,15 @@
   flex-direction: column;
   width: 100%;
   min-width: 0;
-  height: 100%;
+  height: auto;
+  min-height: 100%;
   border-radius: 1.25rem;
+  /* Clip to radius only — height grows with content so nothing is cut off */
   overflow: hidden;
   border: 1px solid #333;
   transition: border-color 0.3s ease;
   background: var(--card-gradient);
+  touch-action: manipulation;
 
   --mouse-x: 50%;
   --mouse-y: 50%;
@@ -59,6 +62,7 @@
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   background: radial-gradient(circle at var(--mouse-x) var(--mouse-y),
       var(--spotlight-color),
       transparent 70%);
@@ -81,6 +85,8 @@
   background: transparent;
   transition: background 0.3s ease;
   aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 1.25rem 1.25rem 0 0;
 }
 
 .chroma-img-wrapper img {
@@ -98,7 +104,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  min-height: 10.75rem;
+  min-height: 0;
   padding: 0.8rem 0.95rem 0.9rem;
   color: #fff;
   font-family: system-ui, sans-serif;
@@ -107,14 +113,11 @@
 
 .chroma-info .name {
   margin: 0;
-  font-size: 1.02rem;
+  font-size: clamp(0.95rem, 2.5vw, 1.02rem);
   font-weight: 700;
   line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .chroma-info .tech {
@@ -124,6 +127,7 @@
   font-weight: 600;
   letter-spacing: 0.01em;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .chroma-info .role,
@@ -133,14 +137,10 @@
 
 .chroma-info .role {
   margin: 0;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   font-size: 0.82rem;
   line-height: 1.45;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow-wrap: anywhere;
 }
 
 .chroma-links {
@@ -178,6 +178,7 @@
   inset: 0;
   pointer-events: none;
   z-index: 3;
+  border-radius: inherit;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   background: transparent;
@@ -207,6 +208,7 @@
   inset: 0;
   pointer-events: none;
   z-index: 4;
+  border-radius: inherit;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   background: transparent;
@@ -232,4 +234,14 @@
 
   opacity: 1;
   transition: opacity 0.25s ease;
+}
+
+@media (max-width: 480px) {
+  .chroma-info {
+    padding: 0.75rem 0.8rem 0.85rem;
+  }
+
+  .chroma-links {
+    gap: 0.85rem;
+  }
 }

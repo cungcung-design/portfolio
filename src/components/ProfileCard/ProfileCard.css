@@ -32,8 +32,9 @@
   perspective: 500px;
   transform: translate3d(0, 0, 0.1px);
   position: relative;
-  touch-action: none;
+  touch-action: pan-y;
   width: min(100%, 400px);
+  max-width: 100%;
 }
 
 .pc-card-wrapper::before {
@@ -221,7 +222,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
+  min-width: 0;
   background: rgba(12, 12, 16, 0.55);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -234,6 +236,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .pc-mini-avatar {
@@ -257,6 +261,7 @@
   align-items: flex-start;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
 .pc-handle {
@@ -264,6 +269,7 @@
   font-weight: 600;
   color: rgba(255, 255, 255, 0.92);
   line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .pc-status {
@@ -296,6 +302,7 @@
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(10px);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .pc-contact-btn:hover {

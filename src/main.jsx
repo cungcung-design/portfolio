@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <PreLoader/>
     <FumaraSmoke />
-    <div className="relative z-10 w-full overflow-x-hidden">
+    <div className="relative z-10 w-full min-w-0 overflow-x-clip">
       <Navbar />
       <App />
       <Suspense fallback={null}>

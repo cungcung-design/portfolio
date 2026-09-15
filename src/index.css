@@ -2,7 +2,12 @@
 
 @layer base {
   html {
-    overflow-x: hidden;
+    height: auto;
+    min-height: 100%;
+    overflow-x: clip;
+    overflow-y: auto;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -14,10 +19,14 @@
   }
 
   body {
-    overflow-x: hidden;
+    min-height: 100%;
+    overflow-x: clip;
+    overflow-y: visible;
+    overscroll-behavior-y: auto;
+    -webkit-overflow-scrolling: touch;
+    font-family: "Poppins", sans-serif;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    font-family: "Poppins", sans-serif;
   }
 
   body::-webkit-scrollbar {
@@ -26,15 +35,23 @@
     display: none;
   }
 
-  * {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  #root {
+    min-height: 100%;
+    width: 100%;
+    min-width: 0;
+    overflow-x: clip;
   }
 
-  *::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-    display: none;
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  canvas {
+    touch-action: pan-y;
   }
 
   :root {
@@ -66,6 +83,22 @@
 
   .hero-enter-card {
     animation-delay: 0.12s;
+  }
+
+  /* Utility for cards/panels that need internal scroll */
+  .scroll-y-touch {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .scroll-x-touch {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
   }
 }
 

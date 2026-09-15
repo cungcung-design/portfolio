@@ -1,101 +1,94 @@
 import React, { useState, useEffect } from 'react';
-import { FiX, FiGithub } from 'react-icons/fi'; // Install react-icons jika belum: npm install react-icons
+import { FiX, FiGithub } from 'react-icons/fi';
 
 const ProjectModal = ({ isOpen, onClose, project }) => {
-  // State untuk mengontrol animasi penutupan
   const [isClosing, setIsClosing] = useState(false);
 
-  // Fungsi untuk menangani penutupan dengan animasi
   const handleClose = () => {
     setIsClosing(true);
-    // Tunggu animasi selesai (300ms) sebelum memanggil onClose dari props
     setTimeout(() => {
       onClose();
-      setIsClosing(false); // Reset state untuk pembukaan berikutnya
+      setIsClosing(false);
     }, 300);
   };
 
-  // Mencegah scroll di background saat modal terbuka
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
+      const prevHtml = document.documentElement.style.overflow;
+      const prevBody = document.body.style.overflow;
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.documentElement.style.overflow = prevHtml;
+        document.body.style.overflow = prevBody;
+      };
     }
-    // Cleanup function
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
+    return undefined;
   }, [isOpen]);
-
 
   if (!isOpen) return null;
 
   return (
-    // Overlay
     <div
       onClick={handleClose}
-      className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 p-4 transition-opacity duration-300"
+      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain bg-black/70 p-4 sm:items-center"
     >
-      {/* Modal Content */}
       <div
-        onClick={(e) => e.stopPropagation()} // Mencegah modal tertutup saat diklik di dalam
-        className={`bg-zinc-900 border border-violet-500/50 rounded-2xl shadow-2xl shadow-violet-500/20 w-full max-w-lg transform transition-transform duration-300 ${isClosing ? 'animate-out' : 'animate-in'}`}
+        onClick={(e) => e.stopPropagation()}
+        className={`my-auto w-full max-w-lg max-h-[min(92dvh,900px)] overflow-y-auto overscroll-contain rounded-2xl border border-violet-500/50 bg-zinc-900 shadow-2xl shadow-violet-500/20 transform transition-transform duration-300 scroll-y-touch ${isClosing ? 'animate-out' : 'animate-in'}`}
       >
-        {/* --- PROJECT IMAGE --- */}
-        <img 
-          src={project.image} 
-          alt={project.title} 
-          className="w-full h-56 object-cover rounded-t-2xl"
+        <img
+          src={project.image}
+          alt={project.title}
+          className="h-44 w-full object-cover rounded-t-2xl sm:h-56"
         />
 
-        <div className="p-6 flex flex-col gap-4">
-            <div className="flex justify-between items-start">
-                <div className="pr-4">
-                    <h2 className="text-2xl font-bold text-white">{project.title}</h2>
-                    {project.tech && (
-                        <p className="mt-2 text-sm font-semibold text-zinc-300">
-                            {project.tech}
-                        </p>
-                    )}
-                </div>
-                <button
-                    onClick={handleClose}
-                    className="text-zinc-400 hover:text-white transition-colors p-2 rounded-full hover:bg-zinc-700 -mt-2 -mr-2"
-                >
-                    <FiX size={24} />
-                </button>
+        <div className="flex flex-col gap-4 p-5 sm:p-6">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0 pr-2">
+              <h2 className="text-xl font-bold text-white break-words sm:text-2xl">{project.title}</h2>
+              {project.tech && (
+                <p className="mt-2 text-sm font-semibold text-zinc-300 break-words">
+                  {project.tech}
+                </p>
+              )}
             </div>
+            <button
+              onClick={handleClose}
+              className="shrink-0 rounded-full p-2 text-zinc-400 transition-colors hover:bg-zinc-700 hover:text-white"
+              aria-label="Close project details"
+            >
+              <FiX size={24} />
+            </button>
+          </div>
 
-            {/* --- DESKRIPSI LENGKAP --- */}
-            <p className="text-zinc-300 text-base leading-relaxed">
-                {project.fullDescription}
-            </p>
+          <p className="text-base leading-relaxed text-zinc-300 break-words">
+            {project.fullDescription}
+          </p>
 
-            <div className="mt-4 flex flex-col sm:flex-row gap-3">
-                {project.liveUrl && (
-                    <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 font-semibold bg-violet-600 p-3 px-5 rounded-full w-full cursor-pointer border border-transparent hover:bg-violet-700 transition-colors"
-                    >
-                        <span>Live Demo ↗</span>
-                    </a>
-                )}
-                <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 font-semibold bg-violet-600 p-3 px-5 rounded-full w-full cursor-pointer border border-transparent hover:bg-violet-700 transition-colors"
-                >
-                    <FiGithub />
-                    <span>GitHub ↗</span>
-                </a>
-            </div>
+          <div className="mt-2 flex flex-col gap-3 sm:flex-row">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent bg-violet-600 p-3 px-5 font-semibold transition-colors hover:bg-violet-700"
+              >
+                <span>Live Demo ↗</span>
+              </a>
+            )}
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent bg-violet-600 p-3 px-5 font-semibold transition-colors hover:bg-violet-700"
+            >
+              <FiGithub />
+              <span>GitHub ↗</span>
+            </a>
+          </div>
         </div>
       </div>
-       {/* CSS untuk animasi */}
       <style>{`
         @keyframes scaleIn {
           from { transform: scale(0.95); opacity: 0; }
