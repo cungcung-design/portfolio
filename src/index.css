@@ -15,7 +15,26 @@
 
   body {
     overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     font-family: "Poppins", sans-serif;
+  }
+
+  body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  *::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
   }
 
   :root {
@@ -59,5 +78,16 @@
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible,
+  .reveal--card .reveal-child,
+  .reveal--card.is-visible .reveal-child {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

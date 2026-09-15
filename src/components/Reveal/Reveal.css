@@ -1,0 +1,86 @@
+.reveal {
+  --reveal-delay: 0ms;
+  --reveal-duration: 550ms;
+  --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-y: 24px;
+
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y), 0);
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease) var(--reveal-delay),
+    transform var(--reveal-duration) var(--reveal-ease) var(--reveal-delay);
+  will-change: opacity, transform;
+}
+
+.reveal--fade {
+  transform: none;
+}
+
+.reveal--up {
+  transform: translate3d(0, var(--reveal-y), 0);
+}
+
+.reveal--scale {
+  transform: translate3d(0, 18px, 0) scale(0.98);
+}
+
+.reveal--card {
+  transform: translate3d(0, 22px, 0) scale(0.98);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Nested content stagger inside revealed cards */
+.reveal--card .reveal-child {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  transition:
+    opacity 480ms var(--reveal-ease),
+    transform 480ms var(--reveal-ease);
+}
+
+.reveal--card.is-visible .reveal-child {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal--card.is-visible .reveal-child-1 {
+  transition-delay: calc(var(--reveal-delay) + 40ms);
+}
+
+.reveal--card.is-visible .reveal-child-2 {
+  transition-delay: calc(var(--reveal-delay) + 90ms);
+}
+
+.reveal--card.is-visible .reveal-child-3 {
+  transition-delay: calc(var(--reveal-delay) + 140ms);
+}
+
+.reveal--card.is-visible .reveal-child-4 {
+  transition-delay: calc(var(--reveal-delay) + 180ms);
+}
+
+@media (max-width: 767px) {
+  .reveal {
+    --reveal-y: 16px;
+    --reveal-duration: 450ms;
+  }
+
+  .reveal--scale {
+    transform: translate3d(0, 12px, 0) scale(0.99);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible,
+  .reveal--card .reveal-child,
+  .reveal--card.is-visible .reveal-child {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

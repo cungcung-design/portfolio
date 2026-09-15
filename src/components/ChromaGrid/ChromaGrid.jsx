@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
+import Reveal from "../Reveal/Reveal";
 import "./ChromaGrid.css";
 
 // Terima `onItemClick` di props
@@ -75,47 +76,46 @@ export const ChromaGrid = ({
     <div
       ref={rootRef}
       className={`chroma-grid ${className}`}
-      style={
-        {
-          "--r": `${radius}px`,
-          "--cols": columns,
-          "--rows": rows,
-        }
-      }
+      style={{
+        "--r": `${radius}px`,
+        "--cols": columns,
+        "--rows": rows,
+      }}
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
     >
       {data.map((c, i) => (
-        <article
-          key={i}
+        <Reveal
+          key={c.id ?? i}
+          as="article"
+          variant="card"
+          delay={Math.min(i * 100, 400)}
+          duration={550}
           className="chroma-card"
           onMouseMove={handleCardMove}
-          // Panggil `onItemClick` saat kartu diklik dan kirim datanya
           onClick={() => onItemClick(c)}
-          style={
-            {
-              "--card-border": c.borderColor || "transparent",
-              "--card-gradient": c.gradient,
-              cursor: "pointer", // Selalu pointer karena akan membuka modal
-            }
-          }
+          style={{
+            "--card-border": c.borderColor || "transparent",
+            "--card-gradient": c.gradient,
+            cursor: "pointer",
+          }}
         >
-          <div className="chroma-img-wrapper">
+          <div className="chroma-img-wrapper reveal-child reveal-child-1">
             <img src={c.image} alt={c.title} loading="lazy" />
           </div>
           <footer className="chroma-info">
-            <h3 className="name">{c.title}</h3>
-            {c.tech && <p className="tech">{c.tech}</p>}
+            <h3 className="name reveal-child reveal-child-2">{c.title}</h3>
+            {c.tech && <p className="tech reveal-child reveal-child-2">{c.tech}</p>}
             {c.handle && <span className="handle">{c.handle}</span>}
-            <p className="role">{c.subtitle}</p>
+            <p className="role reveal-child reveal-child-3">{c.subtitle}</p>
             {c.location && <span className="location">{c.location}</span>}
             {c.tech && (
               <div
-                className="chroma-links"
+                className="chroma-links reveal-child reveal-child-4"
                 onClick={(e) => e.stopPropagation()}
               >
-                {!c.hideLiveDemo && (
-                  c.liveUrl ? (
+                {!c.hideLiveDemo &&
+                  (c.liveUrl ? (
                     <a href={c.liveUrl} target="_blank" rel="noopener noreferrer">
                       Live Demo ↗
                     </a>
@@ -123,15 +123,14 @@ export const ChromaGrid = ({
                     <button type="button" onClick={() => onItemClick(c)}>
                       Live Demo ↗
                     </button>
-                  )
-                )}
+                  ))}
                 <a href={c.url} target="_blank" rel="noopener noreferrer">
                   GitHub ↗
                 </a>
               </div>
             )}
           </footer>
-        </article>
+        </Reveal>
       ))}
       <div className="chroma-overlay" />
       <div ref={fadeRef} className="chroma-fade" />

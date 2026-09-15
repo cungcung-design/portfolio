@@ -5,10 +5,6 @@ import App from './App.jsx'
 import Navbar from './components/Navbar.jsx'
 import PreLoader from './components/PreLoader.jsx'
 import FumaraSmoke from './components/FumaraSmoke/FumaraSmoke.jsx'
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-
-AOS.init({ once: true });
 
 const Footer = lazy(() => import('./components/Footer.jsx'))
 
