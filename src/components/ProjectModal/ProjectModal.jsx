@@ -46,9 +46,9 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
         <div className="flex flex-col gap-4 p-5 sm:p-6">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 pr-2">
-              <h2 className="text-xl font-bold text-white break-words sm:text-2xl">{project.title}</h2>
+              <h2 className="font-display text-xl font-semibold tracking-[-0.025em] text-white break-words sm:text-2xl">{project.title}</h2>
               {project.tech && (
-                <p className="mt-2 text-sm font-semibold text-zinc-300 break-words">
+                <p className="text-ui mt-2 text-sm font-medium text-zinc-300 break-words">
                   {project.tech}
                 </p>
               )}
@@ -62,7 +62,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
             </button>
           </div>
 
-          <p className="text-base leading-relaxed text-zinc-300 break-words">
+          <p className="text-body text-zinc-300 break-words">
             {project.fullDescription}
           </p>
 
@@ -72,7 +72,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent bg-violet-600 p-3 px-5 font-semibold transition-colors hover:bg-violet-700"
+                className="text-ui inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent bg-violet-600 p-3 px-5 font-semibold transition-colors hover:bg-violet-700"
               >
                 <span>Live Demo ↗</span>
               </a>
@@ -81,7 +81,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent bg-violet-600 p-3 px-5 font-semibold transition-colors hover:bg-violet-700"
+              className="text-ui inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent bg-violet-600 p-3 px-5 font-semibold transition-colors hover:bg-violet-700"
             >
               <FiGithub />
               <span>GitHub ↗</span>

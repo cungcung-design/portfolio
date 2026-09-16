@@ -63,6 +63,32 @@
   transition-delay: calc(var(--reveal-delay) + 180ms);
 }
 
+/* Line-by-line scroll reveal */
+.line-reveal {
+  --line-duration: 520ms;
+  --line-base-delay: 0ms;
+  --line-stagger: 120ms;
+  --line-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --line-y: 18px;
+}
+
+.line-reveal__line {
+  opacity: 0;
+  transform: translate3d(0, var(--line-y), 0);
+  transition:
+    opacity var(--line-duration) var(--line-ease),
+    transform var(--line-duration) var(--line-ease);
+  transition-delay: calc(
+    var(--line-base-delay) + (var(--line-index, 0) * var(--line-stagger))
+  );
+  will-change: opacity, transform;
+}
+
+.line-reveal.is-visible .line-reveal__line {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
 @media (max-width: 767px) {
   .reveal {
     --reveal-y: 16px;
@@ -72,13 +98,21 @@
   .reveal--scale {
     transform: translate3d(0, 12px, 0) scale(0.99);
   }
+
+  .line-reveal {
+    --line-y: 12px;
+    --line-duration: 450ms;
+    --line-stagger: 90ms;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal.is-visible,
   .reveal--card .reveal-child,
-  .reveal--card.is-visible .reveal-child {
+  .reveal--card.is-visible .reveal-child,
+  .line-reveal__line,
+  .line-reveal.is-visible .line-reveal__line {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;

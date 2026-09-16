@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 const links = [
   { href: "#home", label: "Home" },
   { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
   { href: "#project", label: "Project" },
   { href: "#contact", label: "Contact" },
 ];
@@ -45,7 +46,7 @@ const Navbar = ({ hidden = false }) => {
         <div className="logo min-w-0">
           <a
             href="#home"
-            className="inline-flex items-center text-xl md:text-2xl font-bold text-white p-1"
+            className="font-display inline-flex items-center p-1 text-xl font-semibold tracking-[-0.02em] text-[#8B5CF6] md:text-2xl"
           >
             Portofolio
           </a>
@@ -56,7 +57,7 @@ const Navbar = ({ hidden = false }) => {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-base font-medium text-white/90 transition-colors hover:text-white"
+               className="text-ui text-[0.9375rem] font-medium text-white/90 transition-all duration-300 hover:text-[#A78BFA]"
               >
                 {link.label}
               </a>
@@ -111,7 +112,7 @@ const Navbar = ({ hidden = false }) => {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="flex min-h-12 items-center rounded-xl px-4 text-base font-medium text-white/90"
+                  className="text-ui flex min-h-12 items-center rounded-xl px-4 text-[0.9375rem] font-medium text-white/90"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}

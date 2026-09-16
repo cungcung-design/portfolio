@@ -3,7 +3,8 @@ import { chromium } from "playwright";
 const targets = [
   { name: "LOCAL", url: process.env.LOCAL_URL || "http://localhost:5173/portofolio/" },
   { name: "PREVIEW", url: process.env.PREVIEW_URL || "http://localhost:4173/portofolio/" },
-  { name: "PROD", url: "https://portofolio-main-flame.vercel.app/" },
+  { name: "PROD", url: "https://cruzdeveloper.com/" },
+  { name: "VERCEL", url: "https://portofolio-main-flame.vercel.app/" },
 ];
 
 const WIDTH = Number(process.env.VP_WIDTH || 1440);

@@ -1,18 +1,33 @@
 import { lazy, Suspense, useState } from "react";
+import { FaWhatsapp, FaFacebookF, FaTiktok, FaInstagram, FaTelegramPlane } from "react-icons/fa";
 import ProfileCard from "./components/ProfileCard/ProfileCard";
 import Lanyard from "./components/Lanyard/Lanyard";
 import ShinyText from "./components/ShinyText/ShinyText";
 import BlurText from "./components/BlurText/BlurText";
 import Reveal from "./components/Reveal/Reveal";
+import LineReveal from "./components/Reveal/LineReveal";
+import WhatsAppFloat from "./components/WhatsAppFloat";
+import ContactFormModal from "./components/ContactFormModal/ContactFormModal";
+import WhatsAppModal from "./components/WhatsAppModal/WhatsAppModal";
 import { skillGroups } from "./data";
+import { socialLinks } from "./socials";
 import InViewLazy from "./components/InViewLazy";
 import { publicAsset } from "./publicAsset";
+
+const socialIcons = {
+  facebook: FaFacebookF,
+  tiktok: FaTiktok,
+  instagram: FaInstagram,
+  telegram: FaTelegramPlane,
+};
 
 const ProjectsGrid = lazy(() => import("./components/ProjectsGrid"));
 const ProjectModal = lazy(() => import("./components/ProjectModal/ProjectModal"));
 
 function App() {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [contactOpen, setContactOpen] = useState(false);
+  const [whatsAppOpen, setWhatsAppOpen] = useState(false);
 
   const handleProjectClick = (project) => {
     setSelectedProject(project);
@@ -30,12 +45,12 @@ function App() {
             <Reveal variant="up" delay={0} duration={500}>
               <div className="flex items-center gap-3 mb-7 bg-transparent w-fit max-w-full py-2 px-1 rounded-2xl">
                 <img src={publicAsset("assets/cruz.png")} className="w-10 rounded-md" width="40" height="40" fetchPriority="high" />
-                <q className="text-base md:text-lg">Junior Full-Stack Developer</q>
+                <q className="text-ui text-base text-[#A78BFA] md:text-[1.0625rem]">Junior Full-Stack Developer</q>
               </div>
             </Reveal>
 
-            <Reveal as="h1" variant="up" delay={80} duration={550} className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-7">
-              <ShinyText text="Hi I'm Cruz" disabled={false} speed={3} className="custom-class" />
+            <Reveal as="h1" variant="up" delay={80} duration={550} className="text-hero mb-7 text-white">
+              Hi, I&apos;m <span className="text-[#8B5CF6]">Cruz</span>
             </Reveal>
 
             <Reveal variant="up" delay={140} duration={550}>
@@ -45,27 +60,47 @@ function App() {
                 stepDuration={0.22}
                 animateBy="words"
                 direction="top"
-                className="mb-9 text-base md:text-lg text-zinc-300"
+                className="text-body mb-9 text-zinc-400"
               />
             </Reveal>
 
             <Reveal variant="up" delay={200} duration={500}>
-              <div className="flex flex-wrap items-center sm:gap-4 gap-3">
-                <a
-                  href={publicAsset("assets/CV.pdf")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-base font-semibold bg-[#1a1a1a] py-3 px-6 rounded-full border border-gray-700 hover:bg-[#222] transition-colors"
-                >
-                  <ShinyText text="View CV" disabled={false} speed={3} className="custom-class" />
-                </a>
+              <div className="flex flex-col items-start gap-4">
+                <div className="flex flex-wrap items-center gap-3">
+                  {socialLinks.map((social) => {
+                    const Icon = socialIcons[social.id];
+                    return (
+                      <a
+                        key={social.id}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={social.label}
+                        className="social-icon"
+                      >
+                        <Icon size={17} aria-hidden="true" />
+                      </a>
+                    );
+                  })}
+                </div>
 
-                <a
-                  href="#project"
-                  className="text-base font-semibold bg-[#1a1a1a] py-3 px-6 rounded-full border border-gray-700 hover:bg-[#222] transition-colors"
-                >
-                  <ShinyText text="Explore My Projects" disabled={false} speed={3} className="custom-class" />
-                </a>
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                  <a
+                    href={publicAsset("assets/CV.pdf")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hero-btn-primary"
+                  >
+                    View CV
+                  </a>
+
+                  <a
+                    href="#project"
+                    className="hero-btn-secondary"
+                  >
+                    Explore My Projects
+                  </a>
+                </div>
               </div>
             </Reveal>
           </div>
@@ -81,7 +116,7 @@ function App() {
               showUserInfo={true}
               enableTilt={true}
               enableMobileTilt={false}
-              onContactClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              onContactClick={() => setContactOpen(true)}
             />
           </Reveal>
         </div>
@@ -94,40 +129,47 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 items-stretch gap-8 md:gap-10">
             <div className="flex min-w-0 items-center border-b border-violet-500/30 pb-8 md:border-b-0 md:border-r md:pr-8 md:pb-0 lg:pr-10">
               <div className="w-full min-w-0 text-left">
-                <Reveal as="h2" variant="up" duration={550} className="text-2xl md:text-3xl font-bold text-white mb-5">
+                <Reveal as="h2" variant="up" duration={550} className="text-section mb-5 text-white">
                   About Me
                 </Reveal>
 
-                <Reveal
-                  as="p"
-                  variant="up"
-                  delay={80}
-                  duration={600}
-                  className="text-sm md:text-base leading-relaxed mb-8 text-gray-300 break-words"
-                >
-                  Hi, I’m Cruz, a Computer Science student at INTI University, Malaysia, and a Junior Full-Stack Developer. I enjoy building real-world applications and have experience with React, Node.js, Python, FastAPI, Django, Laravel, Flutter, and databases. I’ve completed 6 projects, including e-commerce platforms, a Smart POS, a SaaS dashboard, and a mobile app. I’m passionate about learning, solving problems, and growing through real-world development experience.
-                </Reveal>
+                <BlurText
+                  text="Hi, I'm Cruz, a Computer Science student at INTI University, Malaysia, and a Junior Full-Stack Developer. I enjoy building real-world applications and have experience with React, Node.js, Python, FastAPI, Django, Laravel, Flutter, and databases. I've completed 6 projects, including e-commerce platforms, a Smart POS, a SaaS dashboard, and a mobile app. I'm passionate about learning, solving problems, and growing through real-world development experience."
+                  delay={40}
+                  stepDuration={0.22}
+                  animateBy="words"
+                  direction="top"
+                  className="text-body mb-8 break-words text-gray-300"
+                />
 
-                <div className="mb-2 flex w-full min-w-0 flex-col items-center gap-y-5 text-center sm:flex-row sm:items-start sm:justify-between sm:text-left">
-                  <Reveal variant="up" delay={140} duration={500} className="w-full min-w-0 sm:flex-1">
-                    <h1 className="text-2xl md:text-3xl mb-1">
-                      6<span className="text-violet-500">+</span>
-                    </h1>
-                    <p className="text-sm">Projects Completed</p>
-                  </Reveal>
-                  <Reveal variant="up" delay={200} duration={500} className="w-full min-w-0 sm:flex-1">
-                    <h1 className="text-2xl md:text-3xl mb-1">
-                      1st<span className="text-violet-500"> Year</span>
-                    </h1>
-                    <p className="text-sm">Computer Science Student</p>
-                  </Reveal>
-                  <Reveal variant="up" delay={260} duration={500} className="w-full min-w-0 sm:flex-1">
-                    <h1 className="text-2xl md:text-3xl mb-1">
-                      1<span className="text-violet-500">+</span>
-                    </h1>
-                    <p className="text-sm">Year of Experience</p>
-                  </Reveal>
-                </div>
+                <LineReveal
+                  className="mb-2 flex w-full min-w-0 flex-col items-center gap-y-5 text-center sm:flex-row sm:items-start sm:justify-between sm:text-left sm:gap-y-0"
+                  lineAs="div"
+                  delay={2200}
+                  stagger={160}
+                  duration={520}
+                  lines={[
+                    <>
+                      <p className="text-stat mb-1">
+                        6<span className="text-violet-500">+</span>
+                      </p>
+                      <p className="text-label text-zinc-400">Projects Completed</p>
+                    </>,
+                    <>
+                      <p className="text-stat mb-1">
+                        1st<span className="text-violet-500"> Year</span>
+                      </p>
+                      <p className="text-label text-zinc-400">Computer Science Student</p>
+                    </>,
+                    <>
+                      <p className="text-stat mb-1">
+                        1<span className="text-violet-500">+</span>
+                      </p>
+                      <p className="text-label text-zinc-400">Year of Experience</p>
+                    </>,
+                  ]}
+                  lineClassName="w-full min-w-0 sm:flex-1"
+                />
               </div>
             </div>
 
@@ -138,11 +180,11 @@ function App() {
         </div>
 
         {/* Skills */}
-        <div className="tools section-gap w-full min-w-0 overflow-x-clip">
-          <Reveal as="h1" variant="up" duration={550} className="text-2xl md:text-3xl font-bold mb-3">
+        <div className="tools section-gap w-full min-w-0 overflow-x-clip" id="skills">
+          <Reveal as="h1" variant="up" duration={550} className="text-section mb-3">
             Tools & Technologies
           </Reveal>
-          <Reveal as="p" variant="up" delay={80} duration={500} className="w-full max-w-xl text-sm md:text-base opacity-50">
+          <Reveal as="p" variant="up" delay={80} duration={500} className="text-muted w-full max-w-xl opacity-50">
             My Professional Skills
           </Reveal>
 
@@ -152,7 +194,7 @@ function App() {
                 as="h2"
                 variant="up"
                 duration={500}
-                className="text-lg md:text-xl font-semibold mb-4 text-white tracking-tight border-l-2 border-violet-500 pl-4"
+                className="text-subhead mb-4 border-l-2 border-violet-500 pl-4 text-white"
               >
                 {group.title}
               </Reveal>
@@ -178,10 +220,10 @@ function App() {
                           text={tool.nama}
                           disabled={false}
                           speed={3}
-                          className="block text-sm font-semibold sm:text-base"
+                          className="text-ui block text-sm font-semibold sm:text-[0.9375rem]"
                         />
                       </div>
-                      <p className="break-words text-xs text-zinc-400 sm:text-sm">{tool.ket}</p>
+                      <p className="text-label break-words text-zinc-400">{tool.ket}</p>
                     </div>
                   </Reveal>
                 ))}
@@ -192,7 +234,7 @@ function App() {
 
         {/* Project */}
         <div className="project section-gap w-full min-w-0" id="project" />
-        <Reveal as="h1" variant="up" duration={550} className="text-center text-2xl md:text-3xl font-bold mb-2">
+        <Reveal as="h1" variant="up" duration={550} className="text-section mb-2 text-center">
           Project
         </Reveal>
         <Reveal
@@ -200,7 +242,7 @@ function App() {
           variant="up"
           delay={80}
           duration={500}
-          className="mx-auto max-w-3xl px-1 text-sm md:text-base text-center opacity-50 break-words"
+          className="text-muted mx-auto max-w-3xl px-1 text-center opacity-50 break-words"
         >
           Showcasing a selection of projects that reflect my skills, creativity, and passion for building meaningful digital experiences.
         </Reveal>
@@ -213,74 +255,61 @@ function App() {
         </div>
 
         {/* Contact */}
-        <div className="kontak section-gap w-full" id="contact">
-          <Reveal as="h1" variant="up" duration={550} className="text-2xl md:text-3xl mb-2 font-bold text-center">
-            Contact
+        <div className="kontak section-gap w-full min-w-0" id="contact">
+          <Reveal
+            as="h1"
+            variant="up"
+            duration={550}
+            className="text-section text-center"
+          >
+            Let&apos;s work together
           </Reveal>
-          <Reveal as="p" variant="up" delay={80} duration={500} className="text-sm md:text-base text-center mb-8 opacity-50">
-            Get in touch with me
+          <Reveal
+            as="p"
+            variant="up"
+            delay={80}
+            duration={500}
+            className="text-muted mx-auto mt-3 max-w-xl px-1 text-center text-zinc-300"
+          >
+            Have a project, job opportunity, or just want to say hello?
           </Reveal>
 
-          <div className="mx-auto w-full max-w-xl">
-            <Reveal variant="up" delay={120} duration={600}>
-              <div className="rounded-2xl bg-[linear-gradient(145deg,transparent_35%,#e81cff,#40c9ff)] p-[2px]">
-                <form
-                  action="https://formsubmit.co/rissoppa21@gmail.com"
-                  method="POST"
-                  className="flex w-full min-w-0 flex-col gap-5 rounded-[14px] bg-[#212121] px-4 py-6 sm:px-6 sm:py-8 md:px-8"
-                  autoComplete="off"
-                >
-                  <div className="flex flex-col gap-0.5">
-                    <label htmlFor="contact-name" className="mb-1.5 text-xs font-semibold text-[#717171]">
-                      Full Name
-                    </label>
-                    <input
-                      id="contact-name"
-                      type="text"
-                      name="Name"
-                      placeholder="Name..."
-                      className="w-full rounded-lg border border-[#414141] bg-transparent px-4 py-3 text-white placeholder-white/50 outline-none transition-colors focus:border-[#e81cff]"
-                      required
-                    />
-                  </div>
-                  <div className="flex flex-col gap-0.5">
-                    <label htmlFor="contact-email" className="mb-1.5 text-xs font-semibold text-[#717171]">
-                      Email
-                    </label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      name="Email"
-                      placeholder="Email..."
-                      className="w-full rounded-lg border border-[#414141] bg-transparent px-4 py-3 text-white placeholder-white/50 outline-none transition-colors focus:border-[#e81cff]"
-                      required
-                    />
-                  </div>
-                  <div className="flex flex-col gap-0.5">
-                    <label htmlFor="message" className="mb-1.5 text-xs font-semibold text-[#717171]">
-                      Message
-                    </label>
-                    <textarea
-                      name="message"
-                      id="message"
-                      rows="4"
-                      placeholder="Message..."
-                      className="h-24 w-full resize-none rounded-lg border border-[#414141] bg-transparent px-4 py-3 text-white placeholder-white/50 outline-none transition-colors focus:border-[#e81cff]"
-                      required
-                    ></textarea>
-                  </div>
-                  <button
-                    type="submit"
-                    className="mt-2 w-full cursor-pointer self-stretch rounded-md border border-[#414141] bg-[#313131] px-4 py-3 text-sm font-semibold text-[#717171] transition-colors hover:border-white hover:bg-white hover:text-[#212121] active:scale-95 sm:w-[40%] sm:min-w-[120px] sm:self-start"
-                  >
-                    Submit
-                  </button>
-                </form>
-              </div>
-            </Reveal>
-          </div>
+          <Reveal variant="up" delay={120} duration={550} className="mt-8">
+            <div className="flex w-full min-w-0 flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:justify-center">
+              <button
+                type="button"
+                onClick={() => setContactOpen(true)}
+                className="text-ui inline-flex min-h-12 w-full items-center justify-center rounded-full border border-gray-700 bg-[#1a1a1a] px-6 py-3 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-[#222] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-400 active:scale-[0.98] sm:w-auto"
+              >
+                Send Message
+              </button>
+              <button
+                type="button"
+                onClick={() => setWhatsAppOpen(true)}
+                aria-label="Open WhatsApp contact options"
+                className="text-ui inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-[#25D366]/35 bg-[#121612] px-6 py-3 text-[0.9375rem] font-semibold text-zinc-100 transition-colors hover:border-[#25D366]/65 hover:bg-[#162016] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366] active:scale-[0.98] sm:w-auto"
+              >
+                <FaWhatsapp size={18} aria-hidden="true" />
+                WhatsApp
+              </button>
+            </div>
+          </Reveal>
+
+          <Reveal
+            as="p"
+            variant="up"
+            delay={160}
+            duration={500}
+            className="text-label mt-5 text-center text-zinc-500"
+          >
+            Available for freelance &amp; junior roles
+          </Reveal>
         </div>
       </main>
+
+      <WhatsAppFloat onClick={() => setWhatsAppOpen(true)} />
+      <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
+      <WhatsAppModal isOpen={whatsAppOpen} onClose={() => setWhatsAppOpen(false)} />
 
       {selectedProject && (
         <Suspense fallback={null}>
