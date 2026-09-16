@@ -13,64 +13,66 @@ import Tools17 from "/assets/tools/php.png";
 import Tools18 from "/assets/tools/vite.png";
 import Tools19 from "/assets/tools/mysql.png";
 
-const icon = (path) =>
+const iconUrl = (path) =>
   `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${path}`;
 
-const si = (slug, color = "ffffff") =>
+const simpleIcon = (slug, color = "ffffff") =>
   `https://cdn.simpleicons.org/${slug}/${color}`;
 
 export const skillGroups = [
   {
     title: "Languages",
     items: [
-      { id: "html", gambar: Tools14, nama: "HTML", ket: "Language", dad: "100" },
-      { id: "css", gambar: Tools15, nama: "CSS", ket: "Language", dad: "150" },
-      { id: "javascript", gambar: Tools6, nama: "JavaScript", ket: "Language", dad: "200" },
-      { id: "python", gambar: icon("python/python-original.svg"), nama: "Python", ket: "Language", dad: "250" },
-      { id: "typescript", gambar: Tools16, nama: "TypeScript", ket: "Language", dad: "300" },
-      { id: "php", gambar: Tools17, nama: "PHP", ket: "Language", dad: "350" },
-      { id: "dart", gambar: icon("dart/dart-original.svg"), nama: "Dart", ket: "Language", dad: "400" },
-      { id: "sql", gambar: icon("sqlite/sqlite-original.svg"), nama: "SQL", ket: "Language", dad: "450" },
+      { id: "html", icon: Tools14, name: "HTML", type: "Language", delay: "100" },
+      { id: "css", icon: Tools15, name: "CSS", type: "Language", delay: "150" },
+      { id: "javascript", icon: Tools6, name: "JavaScript", type: "Language", delay: "200" },
+      { id: "python", icon: iconUrl("python/python-original.svg"), name: "Python", type: "Language", delay: "250" },
+      { id: "typescript", icon: Tools16, name: "TypeScript", type: "Language", delay: "300" },
+      { id: "php", icon: Tools17, name: "PHP", type: "Language", delay: "350" },
+      { id: "dart", icon: iconUrl("dart/dart-original.svg"), name: "Dart", type: "Language", delay: "400" },
+      { id: "sql", icon: iconUrl("sqlite/sqlite-original.svg"), name: "SQL", type: "Language", delay: "450" },
     ],
   },
   {
     title: "Frameworks & Libraries",
     items: [
-      { id: "react", gambar: Tools2, nama: "React", ket: "Library", dad: "100" },
-      { id: "nextjs", gambar: Tools3, nama: "Next.js", ket: "Framework", dad: "150" },
-      { id: "laravel", gambar: icon("laravel/laravel-original.svg"), nama: "Laravel", ket: "Framework", dad: "200" },
-      { id: "fastapi", gambar: icon("fastapi/fastapi-original.svg"), nama: "FastAPI", ket: "Framework", dad: "250" },
-      { id: "django", gambar: icon("django/django-plain.svg"), nama: "Django", ket: "Framework", dad: "300", invert: true },
-      { id: "flutter", gambar: icon("flutter/flutter-original.svg"), nama: "Flutter", ket: "Framework", dad: "350" },
-      { id: "tailwind", gambar: Tools4, nama: "Tailwind CSS", ket: "Framework", dad: "400" },
-      { id: "bootstrap", gambar: Tools5, nama: "Bootstrap", ket: "Framework", dad: "450" },
-      { id: "nodejs", gambar: Tools7, nama: "Node.js", ket: "Runtime", dad: "500" },
-      { id: "express", gambar: icon("express/express-original.svg"), nama: "Express.js", ket: "Framework", dad: "550", invert: true },
-      { id: "prisma", gambar: icon("prisma/prisma-original.svg"), nama: "Prisma", ket: "ORM", dad: "600", invert: true },
-      // { id: "sqlalchemy", gambar: si("sqlalchemy", "D71F00"), nama: "SQLAlchemy", ket: "ORM", dad: "650" },
-      // { id: "tkinter", gambar: icon("python/python-original.svg"), nama: "Tkinter", ket: "GUI Library", dad: "700" },
+      { id: "react", icon: Tools2, name: "React", type: "Library", delay: "100" },
+      { id: "vue", icon: iconUrl("vuejs/vuejs-original.svg"), name: "Vue.js", type: "Framework", delay: "125" },
+      { id: "nextjs", icon: Tools3, name: "Next.js", type: "Framework", delay: "150" },
+      { id: "laravel", icon: iconUrl("laravel/laravel-original.svg"), name: "Laravel", type: "Framework", delay: "200" },
+      { id: "fastapi", icon: iconUrl("fastapi/fastapi-original.svg"), name: "FastAPI", type: "Framework", delay: "250" },
+      // Official dark/black SVGs don't read on dark cards — use bright Simple Icons
+      { id: "django", icon: simpleIcon("django", "34D399"), name: "Django", type: "Framework", delay: "300" },
+      { id: "flutter", icon: iconUrl("flutter/flutter-original.svg"), name: "Flutter", type: "Framework", delay: "350" },
+      { id: "tailwind", icon: Tools4, name: "Tailwind CSS", type: "Framework", delay: "400" },
+      { id: "bootstrap", icon: Tools5, name: "Bootstrap", type: "Framework", delay: "450" },
+      { id: "nodejs", icon: Tools7, name: "Node.js", type: "Runtime", delay: "500" },
+      { id: "express", icon: simpleIcon("express", "ffffff"), name: "Express.js", type: "Framework", delay: "550" },
+      { id: "prisma", icon: simpleIcon("prisma", "A5B4FC"), name: "Prisma", type: "ORM", delay: "600" },
+      // { id: "sqlalchemy", icon: simpleIcon("sqlalchemy", "D71F00"), name: "SQLAlchemy", type: "ORM", delay: "650" },
+      // { id: "tkinter", icon: iconUrl("python/python-original.svg"), name: "Tkinter", type: "GUI Library", delay: "700" },
     ],
   },
   {
     title: "Tools & Other Technologies",
     items: [
-      { id: "postgresql", gambar: icon("postgresql/postgresql-original.svg"), nama: "PostgreSQL", ket: "Database", dad: "100" },
-      { id: "mysql", gambar: Tools19, nama: "MySQL", ket: "Database", dad: "150" },
-      { id: "mongodb", gambar: icon("mongodb/mongodb-original.svg"), nama: "MongoDB", ket: "Database", dad: "200" },
-      { id: "docker", gambar: icon("docker/docker-original.svg"), nama: "Docker", ket: "DevOps", dad: "250" },
-      { id: "git", gambar: icon("git/git-original.svg"), nama: "Git", ket: "Version Control", dad: "300" },
-      { id: "github", gambar: Tools8, nama: "GitHub", ket: "Repository", dad: "350" },
-      { id: "restapi", gambar: si("swagger", "85EA2D"), nama: "REST API", ket: "API", dad: "400" },
-      // { id: "jwt", gambar: si("jsonwebtokens", "ffffff"), nama: "JWT Authentication", ket: "Auth", dad: "450" },
-      // { id: "websocket", gambar: si("socketdotio", "ffffff"), nama: "WebSocket", ket: "Realtime", dad: "500" },
-      { id: "redis", gambar: icon("redis/redis-original.svg"), nama: "Redis", ket: "Cache", dad: "550" },
-      // { id: "celery", gambar: si("celery", "37814A"), nama: "Celery", ket: "Task Queue", dad: "600" },
-      { id: "cloudinary", gambar: si("cloudinary", "3448C5"), nama: "Cloudinary", ket: "Media", dad: "650" },
-      { id: "stripe", gambar: si("stripe", "635BFF"), nama: "Stripe", ket: "Payments", dad: "700" },
-      { id: "vite", gambar: Tools18, nama: "Vite", ket: "Build Tool", dad: "750" },
-      { id: "figma", gambar: Tools11, nama: "Figma", ket: "Design", dad: "800" },
-      // { id: "linux", gambar: icon("linux/linux-original.svg"), nama: "Linux", ket: "OS", dad: "850" },
-      // { id: "postman", gambar: icon("postman/postman-original.svg"), nama: "Postman", ket: "API Testing", dad: "900" },
+      { id: "postgresql", icon: iconUrl("postgresql/postgresql-original.svg"), name: "PostgreSQL", type: "Database", delay: "100" },
+      { id: "mysql", icon: Tools19, name: "MySQL", type: "Database", delay: "150" },
+      { id: "mongodb", icon: iconUrl("mongodb/mongodb-original.svg"), name: "MongoDB", type: "Database", delay: "200" },
+      { id: "docker", icon: iconUrl("docker/docker-original.svg"), name: "Docker", type: "DevOps", delay: "250" },
+      { id: "git", icon: iconUrl("git/git-original.svg"), name: "Git", type: "Version Control", delay: "300" },
+      { id: "github", icon: Tools8, name: "GitHub", type: "Repository", delay: "350" },
+      { id: "restapi", icon: simpleIcon("swagger", "85EA2D"), name: "REST API", type: "API", delay: "400" },
+      // { id: "jwt", icon: simpleIcon("jsonwebtokens", "ffffff"), name: "JWT Authentication", type: "Auth", delay: "450" },
+      // { id: "websocket", icon: simpleIcon("socketdotio", "ffffff"), name: "WebSocket", type: "Realtime", delay: "500" },
+      { id: "redis", icon: iconUrl("redis/redis-original.svg"), name: "Redis", type: "Cache", delay: "550" },
+      // { id: "celery", icon: simpleIcon("celery", "37814A"), name: "Celery", type: "Task Queue", delay: "600" },
+      { id: "cloudinary", icon: simpleIcon("cloudinary", "3448C5"), name: "Cloudinary", type: "Media", delay: "650" },
+      { id: "stripe", icon: simpleIcon("stripe", "635BFF"), name: "Stripe", type: "Payments", delay: "700" },
+      { id: "vite", icon: Tools18, name: "Vite", type: "Build Tool", delay: "750" },
+      { id: "figma", icon: Tools11, name: "Figma", type: "Design", delay: "800" },
+      // { id: "linux", icon: iconUrl("linux/linux-original.svg"), name: "Linux", type: "OS", delay: "850" },
+      // { id: "postman", icon: iconUrl("postman/postman-original.svg"), name: "Postman", type: "API Testing", delay: "900" },
     ],
   },
 ];
