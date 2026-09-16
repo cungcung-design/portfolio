@@ -204,8 +204,8 @@ function App() {
                     className="group flex h-full min-h-[4.5rem] min-w-0 items-center gap-3 rounded-xl border border-zinc-700 bg-zinc-900/60 p-2.5 shadow-lg backdrop-blur-md transition-all duration-300 min-[480px]:p-3 lg:hover:bg-zinc-800/80"
                   >
                     <img
-                      src={tool.gambar}
-                      alt={tool.nama}
+                      src={tool.icon}
+                      alt={tool.name}
                       loading="lazy"
                       decoding="async"
                       className={`h-10 w-10 shrink-0 object-contain rounded-lg bg-zinc-800 p-2 transition-all duration-300 min-[480px]:h-12 min-[480px]:w-12 lg:group-hover:bg-zinc-900 ${tool.invert ? "invert" : ""}`}
@@ -213,13 +213,13 @@ function App() {
                     <div className="flex min-w-0 flex-col">
                       <div className="break-words">
                         <ShinyText
-                          text={tool.nama}
+                          text={tool.name}
                           disabled={false}
                           speed={3}
                           className="text-ui block text-sm font-semibold sm:text-[0.9375rem]"
                         />
                       </div>
-                      <p className="text-label break-words text-zinc-400">{tool.ket}</p>
+                      <p className="text-label break-words text-zinc-400">{tool.type}</p>
                     </div>
                   </Reveal>
                 ))}
