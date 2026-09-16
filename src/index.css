@@ -277,6 +277,84 @@
   .hero-btn-secondary:active {
     transform: scale(0.98);
   }
+
+  /* Premium purple shimmer — hero accents only */
+  .text-shimmer,
+  .text-shimmer-subtle {
+    display: inline-block;
+    color: #8b5cf6; /* static fallback */
+    background-image: linear-gradient(
+      110deg,
+      #7c3aed 0%,
+      #8b5cf6 22%,
+      #c4b5fd 42%,
+      #ffffff 50%,
+      #c4b5fd 58%,
+      #a78bfa 78%,
+      #8b5cf6 100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .text-shimmer {
+    animation: premium-shimmer 4.5s ease-in-out infinite;
+  }
+
+  .text-shimmer-subtle {
+    background-image: linear-gradient(
+      110deg,
+      #7c3aed 0%,
+      #8b5cf6 25%,
+      #a78bfa 45%,
+      #ddd6fe 52%,
+      #a78bfa 60%,
+      #8b5cf6 85%,
+      #7c3aed 100%
+    );
+    animation: premium-shimmer 5.5s ease-in-out infinite;
+  }
+
+  @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+    .text-shimmer,
+    .text-shimmer-subtle {
+      color: #8b5cf6;
+      background-image: none;
+      -webkit-text-fill-color: unset;
+      animation: none;
+    }
+
+    .text-shimmer-subtle {
+      color: #a78bfa;
+    }
+  }
+}
+
+@keyframes premium-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-shimmer,
+  .text-shimmer-subtle {
+    animation: none !important;
+    background-image: none !important;
+    -webkit-text-fill-color: unset !important;
+    color: #8b5cf6 !important;
+  }
+
+  .text-shimmer-subtle {
+    color: #a78bfa !important;
+  }
 }
 
 @keyframes hero-fade-up {

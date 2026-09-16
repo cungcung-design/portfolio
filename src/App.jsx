@@ -45,12 +45,12 @@ function App() {
             <Reveal variant="up" delay={0} duration={500}>
               <div className="flex items-center gap-3 mb-7 bg-transparent w-fit max-w-full py-2 px-1 rounded-2xl">
                 <img src={publicAsset("assets/cruz.png")} className="w-10 rounded-md" width="40" height="40" fetchPriority="high" />
-                <q className="text-ui text-base text-[#A78BFA] md:text-[1.0625rem]">Junior Full-Stack Developer</q>
+                <q className="text-ui text-shimmer-subtle text-base md:text-[1.0625rem]">Junior Full-Stack Developer</q>
               </div>
             </Reveal>
 
             <Reveal as="h1" variant="up" delay={80} duration={550} className="text-hero mb-7 text-white">
-              Hi, I&apos;m <span className="text-[#8B5CF6]">Cruz</span>
+              Hi, I&apos;m <span className="text-shimmer">Cruz</span>
             </Reveal>
 
             <Reveal variant="up" delay={140} duration={550}>
