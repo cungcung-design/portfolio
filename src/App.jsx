@@ -168,8 +168,13 @@ function App() {
               </div>
             </div>
 
-            <Reveal variant="scale" delay={120} duration={650} className="flex w-full min-w-0 max-w-full items-center justify-center overflow-x-clip md:pl-8 lg:pl-10">
-              <Lanyard position={[0, 0, 13]} gravity={[0, -40, 0]} />
+            <Reveal
+              variant="scale"
+              delay={120}
+              duration={650}
+              className="flex w-full min-w-0 max-w-full items-center justify-center overflow-hidden md:pl-8 lg:pl-10"
+            >
+              <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} fov={20} />
             </Reveal>
           </div>
         </div>

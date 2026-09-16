@@ -42,8 +42,9 @@ export default function Lanyard({ position = [0, 0, 30], gravity = [0, -40, 0], 
 }
 function Band({ maxSpeed = 50, minSpeed = 0 }) {
   const band = useRef(), fixed = useRef(), j1 = useRef(), j2 = useRef(), j3 = useRef(), card = useRef();
-  const vec = new THREE.Vector3(), ang = new THREE.Vector3(), rot = new THREE.Vector3(), dir = new THREE.Vector3();
-  const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 4, linearDamping: 4 };
+  const vec = new THREE.Vector3(), dir = new THREE.Vector3();
+  // Allow natural swing + flip; keep mild damping so it doesn't spin forever
+  const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 2.2, linearDamping: 3.5 };
   const { nodes, materials } = useGLTF(cardGLB);
   const texture = useTexture(lanyard);
   const cardMap = useTexture(cardTexture);
@@ -98,9 +99,27 @@ function Band({ maxSpeed = 50, minSpeed = 0 }) {
       curve.points[2].copy(j1.current.lerped);
       curve.points[3].copy(fixed.current.translation());
       band.current.geometry.setPoints(curve.getPoints(32));
-      ang.copy(card.current.angvel());
-      rot.copy(card.current.rotation());
-      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
+      // Do not cancel Y spin — that was blocking the card from flipping
+
+      // Keep the hanging badge inside the camera/card frame after refresh & idle swing
+      if (!dragged && card.current) {
+        const t = card.current.translation();
+        const x = THREE.MathUtils.clamp(t.x, -0.85, 0.85);
+        const y = THREE.MathUtils.clamp(t.y, -3.2, 0.35);
+        const z = THREE.MathUtils.clamp(t.z, -0.55, 0.55);
+        if (x !== t.x || y !== t.y || z !== t.z) {
+          card.current.setTranslation({ x, y, z }, true);
+          const lv = card.current.linvel();
+          card.current.setLinvel(
+            {
+              x: THREE.MathUtils.clamp(lv.x, -1.5, 1.5),
+              y: THREE.MathUtils.clamp(lv.y, -2, 2),
+              z: THREE.MathUtils.clamp(lv.z, -1.5, 1.5),
+            },
+            true
+          );
+        }
+      }
     }
   });
 
@@ -109,44 +128,54 @@ function Band({ maxSpeed = 50, minSpeed = 0 }) {
 
   return (
     <>
-      <group position={[0, 4, 0]}>
+      {/* Start already hanging vertically so refresh doesn't fling the badge sideways */}
+      <group position={[0, 3.6, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
+        <RigidBody position={[0, -0.85, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
+        <RigidBody position={[0, -1.7, 0]} ref={j2} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
+        <RigidBody position={[0, -2.55, 0]} ref={j3} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[2, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
+        <RigidBody position={[0, -3.35, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
           <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
-            scale={2.45}
+            scale={2.62}
             position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e) => (e.target.releasePointerCapture(e.pointerId), drag(false))}
             onPointerDown={(e) => (e.target.setPointerCapture(e.pointerId), drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation()))))}>
             <mesh geometry={nodes.card.geometry}>
-              <meshPhysicalMaterial map={cardMap} map-anisotropy={16} clearcoat={1} clearcoatRoughness={0.15} roughness={0.9} metalness={0.8} />
+              <meshPhysicalMaterial
+                map={cardMap}
+                map-anisotropy={16}
+                clearcoat={1}
+                clearcoatRoughness={0.15}
+                roughness={0.9}
+                metalness={0.8}
+                side={THREE.DoubleSide}
+              />
             </mesh>
             <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
             <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band}>
+      <mesh ref={band} renderOrder={0}>
         <meshLineGeometry />
         <meshLineMaterial
           color="white"
-          depthTest={false}
+          depthTest
+          depthWrite={false}
           resolution={isSmall ? [1000, 2000] : [1000, 1000]}
           useMap
           map={texture}
           repeat={[-4, 1]}
-          lineWidth={1}
+          lineWidth={0.7}
         />
       </mesh>
     </>
