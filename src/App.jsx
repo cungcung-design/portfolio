@@ -5,7 +5,6 @@ import Lanyard from "./components/Lanyard/Lanyard";
 import ShinyText from "./components/ShinyText/ShinyText";
 import BlurText from "./components/BlurText/BlurText";
 import Reveal from "./components/Reveal/Reveal";
-import LineReveal from "./components/Reveal/LineReveal";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import ContactFormModal from "./components/ContactFormModal/ContactFormModal";
 import WhatsAppModal from "./components/WhatsAppModal/WhatsAppModal";
@@ -105,20 +104,25 @@ function App() {
             </Reveal>
           </div>
 
-          <Reveal variant="scale" delay={160} duration={600} className="flex min-w-0 justify-center md:justify-end -translate-y-4 md:-translate-y-10">
-            <ProfileCard
-              name="Cruz"
-              title="Junior Developer"
-              handle="N Z Cung JB"
-              status="Online"
-              contactText="Contact Me"
-              avatarUrl={publicAsset("assets/cruz.png")}
-              showUserInfo={true}
-              enableTilt={true}
-              enableMobileTilt={false}
-              onContactClick={() => setContactOpen(true)}
-            />
-          </Reveal>
+ <Reveal
+  variant="scale"
+  delay={160}
+  duration={600}
+  className="flex min-w-0 justify-center md:justify-end -translate-y-4 md:-translate-y-10"
+>
+  <ProfileCard
+    name="Cruz"
+    title="Junior Developer"
+    handle="N Z Cung JB"
+    status="Online"
+    contactText="Contact Me"
+    avatarUrl={publicAsset("assets/cruz.png")}
+    showUserInfo={true}
+    enableTilt={false}
+    enableMobileTilt={false}
+    onContactClick={() => setContactOpen(true)}
+  />
+</Reveal>
         </div>
 
         {/* About */}
@@ -142,34 +146,26 @@ function App() {
                   className="text-body mb-8 break-words text-gray-300"
                 />
 
-                <LineReveal
-                  className="mb-2 flex w-full min-w-0 flex-col items-center gap-y-5 text-center sm:flex-row sm:items-start sm:justify-between sm:text-left sm:gap-y-0"
-                  lineAs="div"
-                  delay={2200}
-                  stagger={160}
-                  duration={520}
-                  lines={[
-                    <>
-                      <p className="text-stat mb-1">
-                        6<span className="text-violet-500">+</span>
-                      </p>
-                      <p className="text-label text-zinc-400">Projects Completed</p>
-                    </>,
-                    <>
-                      <p className="text-stat mb-1">
-                        1st<span className="text-violet-500"> Year</span>
-                      </p>
-                      <p className="text-label text-zinc-400">Computer Science Student</p>
-                    </>,
-                    <>
-                      <p className="text-stat mb-1">
-                        1<span className="text-violet-500">+</span>
-                      </p>
-                      <p className="text-label text-zinc-400">Year of Experience</p>
-                    </>,
-                  ]}
-                  lineClassName="w-full min-w-0 sm:flex-1"
-                />
+                <div className="about-stats mb-2 grid w-full min-w-0 grid-cols-3 gap-2 text-center sm:gap-4 sm:text-left">
+                  <Reveal variant="up" delay={2200} duration={520} className="min-w-0">
+                    <p className="text-stat mb-1">
+                      6<span className="text-violet-500">+</span>
+                    </p>
+                    <p className="text-label text-zinc-400">Projects Completed</p>
+                  </Reveal>
+                  <Reveal variant="up" delay={2360} duration={520} className="min-w-0">
+                    <p className="text-stat mb-1">
+                      1st<span className="text-violet-500"> Year</span>
+                    </p>
+                    <p className="text-label text-zinc-400">Computer Science Student</p>
+                  </Reveal>
+                  <Reveal variant="up" delay={2520} duration={520} className="min-w-0">
+                    <p className="text-stat mb-1">
+                      1<span className="text-violet-500">+</span>
+                    </p>
+                    <p className="text-label text-zinc-400">Year of Experience</p>
+                  </Reveal>
+                </div>
               </div>
             </div>
 

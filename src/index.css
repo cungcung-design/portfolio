@@ -168,6 +168,35 @@
     letter-spacing: -0.005em;
   }
 
+  .about-stats {
+    align-items: start;
+  }
+
+  .about-stats .text-stat {
+    font-size: clamp(1.15rem, 4.2vw, 1.875rem);
+  }
+
+  .about-stats .text-label {
+    font-size: clamp(0.65rem, 2.4vw, 0.875rem);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  @media (max-width: 380px) {
+    .about-stats {
+      gap: 0.35rem;
+    }
+
+    .about-stats .text-stat {
+      font-size: 1.05rem;
+    }
+
+    .about-stats .text-label {
+      font-size: 0.62rem;
+    }
+  }
+
   .hero-enter {
     opacity: 1;
     animation: hero-fade-up 0.7s ease both;

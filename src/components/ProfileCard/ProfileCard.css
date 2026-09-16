@@ -44,22 +44,24 @@
   background: inherit;
   background-position: inherit;
   border-radius: inherit;
-  transition: all 0.5s ease;
-  filter: contrast(2) saturate(2) blur(36px);
-  transform: scale(0.8) translate3d(0, 0, 0.1px);
+  transition: none;
+  filter: contrast(1.2) saturate(1.4) blur(28px) opacity(0.55);
+  transform: scale(0.85) translate3d(0, 0, 0.1px);
   background-size: 100% 100%;
   background-image: var(--behind-gradient);
+  pointer-events: none;
 }
 
+/* Keep card visually stable — no hover brightness/shine flash */
 .pc-card-wrapper:hover,
 .pc-card-wrapper.active {
-  --card-opacity: 1;
+  --card-opacity: 0;
 }
 
 .pc-card-wrapper:hover::before,
 .pc-card-wrapper.active::before {
-  filter: contrast(1) saturate(2) blur(40px) opacity(1);
-  transform: scale(0.9) translate3d(0, 0, 0.1px);
+  filter: contrast(1.2) saturate(1.4) blur(28px) opacity(0.55);
+  transform: scale(0.85) translate3d(0, 0, 0.1px);
 }
 
 .pc-card {
@@ -87,8 +89,8 @@
 
 .pc-card:hover,
 .pc-card.active {
-  transition: none;
-  transform: translate3d(0, 0, 0.1px) rotateX(var(--rotate-y)) rotateY(var(--rotate-x));
+  transition: transform 1s ease;
+  transform: translate3d(0, 0, 0.1px) rotateX(0deg) rotateY(0deg);
 }
 
 .pc-card * {
@@ -147,15 +149,15 @@
 
 .pc-card:hover .pc-shine,
 .pc-card.active .pc-shine {
-  filter: brightness(0.85) contrast(1.5) saturate(0.5);
-  animation: none;
+  filter: brightness(0.66) contrast(1.33) saturate(0.33) opacity(0.5);
+  animation: holo-bg 18s linear infinite;
 }
 
 .pc-card:hover .pc-shine::before,
 .pc-card.active .pc-shine::before,
 .pc-card:hover .pc-shine::after,
 .pc-card.active .pc-shine::after {
-  opacity: 1;
+  opacity: 0;
 }
 
 .pc-shine::before {
@@ -177,10 +179,12 @@
 .pc-glare {
   transform: translate3d(0, 0, 1.1px);
   overflow: hidden;
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(248, 25%, 80%) 12%, hsla(207, 40%, 30%, 0.8) 90%);
+  background-image: radial-gradient(farthest-corner circle at 50% 50%, hsl(262, 30%, 55%) 12%, hsla(262, 25%, 20%, 0.55) 90%);
   mix-blend-mode: overlay;
-  filter: brightness(0.8) contrast(1.2);
+  filter: brightness(0.7) contrast(1.1);
+  opacity: 0.45;
   z-index: 4;
+  pointer-events: none;
 }
 
 .pc-avatar-content {
@@ -198,7 +202,7 @@
   top: 6.2rem;
   bottom: auto;
   transform: translateX(-50%) scale(1);
-  opacity: calc(1.75 - var(--pointer-from-center));
+  opacity: 1;
 }
 
 .pc-avatar-content::before {
