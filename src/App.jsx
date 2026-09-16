@@ -55,7 +55,7 @@ function App() {
 
             <Reveal variant="up" delay={140} duration={550}>
               <BlurText
-                text="A passionate full-stack developer who enjoys turning ideas into modern, reliable, and user-friendly web and mobile applications"
+                text="A passionate junior developer who enjoys turning ideas into modern, reliable, and user-friendly web and mobile applications"
                 delay={45}
                 stepDuration={0.22}
                 animateBy="words"
