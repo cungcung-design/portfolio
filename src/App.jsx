@@ -5,7 +5,6 @@ import Lanyard from "./components/Lanyard/Lanyard";
 import ShinyText from "./components/ShinyText/ShinyText";
 import BlurText from "./components/BlurText/BlurText";
 import Reveal from "./components/Reveal/Reveal";
-import WhatsAppFloat from "./components/WhatsAppFloat";
 import ContactFormModal from "./components/ContactFormModal/ContactFormModal";
 import WhatsAppModal from "./components/WhatsAppModal/WhatsAppModal";
 import { skillGroups } from "./data";
@@ -303,7 +302,6 @@ function App() {
         </div>
       </main>
 
-      <WhatsAppFloat onClick={() => setWhatsAppOpen(true)} />
       <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
       <WhatsAppModal isOpen={whatsAppOpen} onClose={() => setWhatsAppOpen(false)} />
 
