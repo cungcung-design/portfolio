@@ -38,16 +38,16 @@ function App() {
   return (
     <>
       <main className="max-w-7xl mx-auto w-full min-w-0 px-4 sm:px-6 pb-8">
-        <div className="hero grid w-full min-w-0 grid-cols-1 md:grid-cols-2 items-center pt-16 md:pt-24 lg:pt-28 pb-14 md:pb-20 gap-10 md:gap-12 xl:gap-16">
+        <div className="hero grid w-full min-w-0 grid-cols-1 md:grid-cols-2 items-center pt-16 md:pt-24 lg:pt-16 xl:pt-20 pb-14 md:pb-20 lg:pb-14 gap-10 md:gap-12 lg:gap-6 xl:gap-8 lg:max-w-6xl lg:mx-auto">
           <div className="min-w-0">
             <Reveal variant="up" delay={0} duration={500}>
-              <div className="flex items-center gap-3 mb-7 bg-transparent w-fit max-w-full py-2 px-1 rounded-2xl">
+              <div className="flex items-center gap-3 mb-7 lg:mb-5 bg-transparent w-fit max-w-full py-2 lg:py-1.5 px-1 rounded-2xl">
                 <img src={publicAsset("assets/cruz.png")} className="w-10 rounded-md" width="40" height="40" fetchPriority="high" />
                 <q className="text-ui text-shimmer-subtle text-base md:text-[1.0625rem]">Junior Full-Stack Developer</q>
               </div>
             </Reveal>
 
-            <Reveal as="h1" variant="up" delay={80} duration={550} className="text-hero mb-7 text-white">
+            <Reveal as="h1" variant="up" delay={80} duration={550} className="text-hero mb-7 lg:mb-5 text-white">
               Hi, I&apos;m <span className="text-shimmer">Cruz</span>
             </Reveal>
 
@@ -58,7 +58,7 @@ function App() {
                 stepDuration={0.22}
                 animateBy="words"
                 direction="top"
-                className="text-body mb-9 text-zinc-400"
+                className="text-body mb-9 lg:mb-6 text-zinc-400"
               />
             </Reveal>
 
@@ -107,7 +107,7 @@ function App() {
   variant="scale"
   delay={160}
   duration={600}
-  className="flex min-w-0 justify-center md:justify-end -translate-y-4 md:-translate-y-10"
+  className="flex min-w-0 justify-center md:justify-end lg:justify-center -translate-y-4 md:-translate-y-10 lg:-translate-y-6 lg:translate-x-10 xl:translate-x-12"
 >
   <ProfileCard
     name="Cruz"
