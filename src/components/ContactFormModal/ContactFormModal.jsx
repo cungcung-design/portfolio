@@ -1,16 +1,34 @@
 import { useEffect, useRef, useState } from "react";
 import GlassModal from "../GlassModal/GlassModal";
 
-/** Public FormSubmit endpoint — no email password is stored in the app. */
-const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/nguncung65@gmail.com";
+const CONTACT_EMAIL =
+  import.meta.env.VITE_CONTACT_EMAIL?.trim() || "nguncung65@gmail.com";
+const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_EMAIL)}`;
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateFields({ name, email, message }) {
+  if (name.length < 2) return "Please enter your name (at least 2 characters).";
+  if (!EMAIL_PATTERN.test(email)) return "Please enter a valid email address.";
+  if (message.length < 10) return "Please write a slightly longer message (at least 10 characters).";
+  return null;
+}
+
+function isFormSubmitSuccess(payload) {
+  if (!payload || typeof payload !== "object") return false;
+  const flag = payload.success;
+  return flag === true || flag === "true";
+}
 
 export default function ContactFormModal({ isOpen, onClose }) {
   const nameRef = useRef(null);
+  const submittingRef = useRef(false);
   const [status, setStatus] = useState({ type: "idle" });
 
   useEffect(() => {
     if (!isOpen) {
       setStatus({ type: "idle" });
+      submittingRef.current = false;
       return;
     }
     const timer = window.setTimeout(() => nameRef.current?.focus(), 80);
@@ -19,31 +37,83 @@ export default function ContactFormModal({ isOpen, onClose }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    const data = new FormData(form);
+    if (submittingRef.current || status.type === "sending") return;
 
+    const form = event.currentTarget;
+    const raw = new FormData(form);
+
+    // Honeypot — silently accept bots without sending
+    if (String(raw.get("_honey") || "").trim()) {
+      setStatus({ type: "success" });
+      form.reset();
+      return;
+    }
+
+    const name = String(raw.get("name") || "").trim();
+    const email = String(raw.get("email") || "").trim();
+    const message = String(raw.get("message") || "").trim();
+
+    const validationError = validateFields({ name, email, message });
+    if (validationError) {
+      setStatus({ type: "error", message: validationError });
+      return;
+    }
+
+    submittingRef.current = true;
     setStatus({ type: "sending" });
 
     try {
       const response = await fetch(FORMSUBMIT_ENDPOINT, {
         method: "POST",
-        body: data,
         headers: {
           Accept: "application/json",
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          _subject: "Portfolio Contact",
+          _template: "table",
+          _captcha: "false",
+          _replyto: email,
+        }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to send message");
+      let payload = null;
+      const contentType = response.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        payload = await response.json();
+      } else {
+        const text = await response.text();
+        try {
+          payload = JSON.parse(text);
+        } catch {
+          payload = { success: false, message: text || "Unexpected response" };
+        }
+      }
+
+      if (!response.ok || !isFormSubmitSuccess(payload)) {
+        const apiMessage =
+          typeof payload?.message === "string" && payload.message.trim()
+            ? payload.message.trim()
+            : null;
+        throw new Error(apiMessage || "Failed to send message");
       }
 
       form.reset();
       setStatus({ type: "success" });
-    } catch {
+    } catch (error) {
+      const detail =
+        error instanceof Error && error.message && !error.message.startsWith("Failed to fetch")
+          ? error.message
+          : "Could not send your message. Please try again or use WhatsApp.";
       setStatus({
         type: "error",
-        message: "Could not send your message. Please try again or use WhatsApp.",
+        message: detail,
       });
+    } finally {
+      submittingRef.current = false;
     }
   };
 
@@ -69,10 +139,7 @@ export default function ContactFormModal({ isOpen, onClose }) {
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="flex w-full min-w-0 flex-col gap-4" autoComplete="off">
-          <input type="hidden" name="_subject" value="Portfolio Contact" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
+        <form onSubmit={handleSubmit} className="flex w-full min-w-0 flex-col gap-4" noValidate autoComplete="off">
           <input
             type="text"
             name="_honey"
@@ -93,6 +160,8 @@ export default function ContactFormModal({ isOpen, onClose }) {
               name="name"
               placeholder="Your name"
               required
+              minLength={2}
+              maxLength={100}
               disabled={status.type === "sending"}
               className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[0.9375rem] text-white placeholder-white/40 outline-none transition-colors focus:border-violet-400/60 focus:bg-white/[0.07] disabled:opacity-60"
             />
@@ -108,6 +177,7 @@ export default function ContactFormModal({ isOpen, onClose }) {
               name="email"
               placeholder="your@email.com"
               required
+              maxLength={120}
               disabled={status.type === "sending"}
               className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[0.9375rem] text-white placeholder-white/40 outline-none transition-colors focus:border-violet-400/60 focus:bg-white/[0.07] disabled:opacity-60"
             />
@@ -123,6 +193,8 @@ export default function ContactFormModal({ isOpen, onClose }) {
               rows={4}
               placeholder="I'd love to hear from you..."
               required
+              minLength={10}
+              maxLength={2000}
               disabled={status.type === "sending"}
               className="min-h-28 w-full resize-y rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[0.9375rem] leading-relaxed text-white placeholder-white/40 outline-none transition-colors focus:border-violet-400/60 focus:bg-white/[0.07] disabled:opacity-60"
             />
