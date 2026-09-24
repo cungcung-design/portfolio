@@ -4,6 +4,6 @@
     { "source": "/portofolio/", "destination": "/", "permanent": false }
   ],
   "rewrites": [
-    { "source": "/((?!assets/).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|assets/).*)", "destination": "/index.html" }
   ]
 }

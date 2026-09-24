@@ -1,23 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import GlassModal from "../GlassModal/GlassModal";
 
-const CONTACT_EMAIL =
-  import.meta.env.VITE_CONTACT_EMAIL?.trim() || "nguncung65@gmail.com";
-const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_EMAIL)}`;
-
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function contactEndpoint() {
+  const base = import.meta.env.BASE_URL || "/";
+  if (base === "/") return "/api/contact";
+  return `${base.replace(/\/?$/, "/")}api/contact`;
+}
 
 function validateFields({ name, email, message }) {
   if (name.length < 2) return "Please enter your name (at least 2 characters).";
   if (!EMAIL_PATTERN.test(email)) return "Please enter a valid email address.";
-  if (message.length < 10) return "Please write a slightly longer message (at least 10 characters).";
+  if (message.length < 10) {
+    return "Please write a slightly longer message (at least 10 characters).";
+  }
   return null;
-}
-
-function isFormSubmitSuccess(payload) {
-  if (!payload || typeof payload !== "object") return false;
-  const flag = payload.success;
-  return flag === true || flag === "true";
 }
 
 export default function ContactFormModal({ isOpen, onClose }) {
@@ -42,7 +40,6 @@ export default function ContactFormModal({ isOpen, onClose }) {
     const form = event.currentTarget;
     const raw = new FormData(form);
 
-    // Honeypot — silently accept bots without sending
     if (String(raw.get("_honey") || "").trim()) {
       setStatus({ type: "success" });
       form.reset();
@@ -63,54 +60,39 @@ export default function ContactFormModal({ isOpen, onClose }) {
     setStatus({ type: "sending" });
 
     try {
-      const response = await fetch(FORMSUBMIT_ENDPOINT, {
+      const response = await fetch(contactEndpoint(), {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name,
-          email,
-          message,
-          _subject: "Portfolio Contact",
-          _template: "table",
-          _captcha: "false",
-          _replyto: email,
-        }),
+        body: JSON.stringify({ name, email, message }),
       });
 
       let payload = null;
-      const contentType = response.headers.get("content-type") || "";
-      if (contentType.includes("application/json")) {
+      try {
         payload = await response.json();
-      } else {
-        const text = await response.text();
-        try {
-          payload = JSON.parse(text);
-        } catch {
-          payload = { success: false, message: text || "Unexpected response" };
-        }
+      } catch {
+        payload = null;
       }
 
-      if (!response.ok || !isFormSubmitSuccess(payload)) {
-        const apiMessage =
-          typeof payload?.message === "string" && payload.message.trim()
-            ? payload.message.trim()
-            : null;
-        throw new Error(apiMessage || "Failed to send message");
+      if (!response.ok || !payload?.ok) {
+        throw new Error(
+          typeof payload?.error === "string" && payload.error.trim()
+            ? payload.error.trim()
+            : "Could not send your message. Please try again or use WhatsApp."
+        );
       }
 
       form.reset();
       setStatus({ type: "success" });
     } catch (error) {
-      const detail =
-        error instanceof Error && error.message && !error.message.startsWith("Failed to fetch")
-          ? error.message
-          : "Could not send your message. Please try again or use WhatsApp.";
       setStatus({
         type: "error",
-        message: detail,
+        message:
+          error instanceof Error && error.message
+            ? error.message
+            : "Could not send your message. Please try again or use WhatsApp.",
       });
     } finally {
       submittingRef.current = false;
@@ -209,9 +191,20 @@ export default function ContactFormModal({ isOpen, onClose }) {
           <button
             type="submit"
             disabled={status.type === "sending"}
-            className="text-ui mt-2 inline-flex min-h-12 w-full items-center justify-center rounded-full border border-white/15 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+            aria-busy={status.type === "sending"}
+            className="text-ui mt-2 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {status.type === "sending" ? "Sending..." : "Send Message"}
+            {status.type === "sending" ? (
+              <>
+                <span
+                  className="h-4 w-4 animate-spin rounded-full border-2 border-white/25 border-t-white/90"
+                  aria-hidden="true"
+                />
+                Sending...
+              </>
+            ) : (
+              "Send Message"
+            )}
           </button>
         </form>
       )}
