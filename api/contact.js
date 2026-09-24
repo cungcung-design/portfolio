@@ -82,13 +82,16 @@ export default async function handler(req, res) {
     if (!result.ok) {
       res.statusCode = result.status || 502;
       res.setHeader("Content-Type", "application/json");
+      const userError =
+        result.status === 503
+          ? "Contact form is temporarily unavailable. Please try WhatsApp or email again later."
+          : "Could not send your message. Please try again or use WhatsApp.";
       res.end(
         JSON.stringify({
           ok: false,
-          error:
-            result.status === 503
-              ? "Contact form is temporarily unavailable. Please try WhatsApp or email again later."
-              : "Could not send your message. Please try again or use WhatsApp.",
+          error: userError,
+          // Non-sensitive provider hint for debugging delivery failures
+          detail: typeof result.error === "string" ? result.error.slice(0, 200) : undefined,
         })
       );
       return;
@@ -97,13 +100,14 @@ export default async function handler(req, res) {
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify({ ok: true, id: result.id }));
-  } catch {
+  } catch (error) {
     res.statusCode = 500;
     res.setHeader("Content-Type", "application/json");
     res.end(
       JSON.stringify({
         ok: false,
         error: "Could not send your message. Please try again or use WhatsApp.",
+        detail: error instanceof Error ? error.message.slice(0, 200) : "unknown_error",
       })
     );
   }
