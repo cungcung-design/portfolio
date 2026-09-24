@@ -128,13 +128,19 @@ export async function sendContactEmail({ name, email, message, env = process.env
 }
 
 export async function readJsonBody(req) {
-  if (req.body && typeof req.body === "object" && !Buffer.isBuffer(req.body)) {
-    return req.body;
+  if (req.body != null) {
+    if (typeof req.body === "string") {
+      const trimmed = req.body.trim();
+      return trimmed ? JSON.parse(trimmed) : {};
+    }
+    if (typeof req.body === "object" && !Buffer.isBuffer(req.body)) {
+      return req.body;
+    }
   }
 
   const chunks = [];
   for await (const chunk of req) chunks.push(chunk);
-  const raw = Buffer.concat(chunks).toString("utf8");
+  const raw = Buffer.concat(chunks).toString("utf8").trim();
   if (!raw) return {};
   return JSON.parse(raw);
 }
