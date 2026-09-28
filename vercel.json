@@ -1,9 +1,24 @@
 {
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.cruzdeveloper.com" }],
+      "destination": "https://cruzdeveloper.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "portofolio-main-flame.vercel.app" }],
+      "destination": "https://cruzdeveloper.com/:path*",
+      "permanent": true
+    },
     { "source": "/portofolio", "destination": "/", "permanent": false },
     { "source": "/portofolio/", "destination": "/", "permanent": false }
   ],
   "rewrites": [
-    { "source": "/((?!api/|assets/).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!api/|assets/|robots\\.txt|sitemap\\.xml).*)",
+      "destination": "/index.html"
+    }
   ]
 }

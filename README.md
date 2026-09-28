@@ -61,7 +61,7 @@ npm run dev
 
 **GitHub:** https://github.com/cungcung-design
 
-**Portfolio:** Coming Soon
+**Portfolio:** https://cruzdeveloper.com
 
 ---
 
