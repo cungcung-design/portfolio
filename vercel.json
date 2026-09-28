@@ -1,6 +1,18 @@
 {
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.cruzdeveloper.com" }],
+      "destination": "https://cruzdeveloper.com/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "portofolio-main-flame.vercel.app" }],
+      "destination": "https://cruzdeveloper.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "www.cruzdeveloper.com" }],
       "destination": "https://cruzdeveloper.com/:path*",
